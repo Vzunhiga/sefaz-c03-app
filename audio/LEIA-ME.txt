@@ -1,0 +1,12 @@
+INSTRUÇÕES RÁPIDAS - SEFAZ-SP C03 STUDY APP
+
+1. Coloque os 5 arquivos de áudio MP3 gerados a partir dos roteiros dentro da pasta 'audio/' com os exatos nomes:
+   - episodio-01-dax.mp3
+   - episodio-02-scrum.mp3
+   - episodio-03-lrf.mp3
+   - episodio-04-matfin.mp3
+   - episodio-05-python.mp3
+
+2. Suba a pasta 'sefaz-c03-app' completa para uma hospedagem HTTPS gratuita (GitHub Pages, Netlify ou Vercel).
+
+3. No iPhone, abra o link no Safari -> Compartilhar -> Adicionar à Tela de Início.
