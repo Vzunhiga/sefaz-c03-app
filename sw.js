@@ -1,4 +1,4 @@
-const VERSION = "sefaz-c03-v3";
+const VERSION = "sefaz-c03-v4";
 const APP_CACHE = VERSION + "-app";
 const AUDIO_CACHE = "c03-audios-v1";
 
