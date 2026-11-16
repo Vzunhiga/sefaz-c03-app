@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+
+  <meta name="theme-color" content="#101827">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="SEFAZ C03">
+
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" href="icon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="icon.svg">
+
+  <title>SEFAZ-SP | C03 Study App</title>
+
+  <style>
+    :root {
+      --bg: #101827;
+      --panel: #192438;
+      --panel2: #202e45;
+      --text: #f4f7fb;
+      --muted: #a5b3c7;
+      --accent: #52a7ff;
+      --green: #35cf91;
+      --border: rgba(255,255,255,.09);
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      padding: 0 0 100px;
+      background: var(--bg);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    header {
+      padding: 25px 20px 20px;
+      padding-top: max(25px, env(safe-area-inset-top));
+      background: linear-gradient(135deg,#172a48,#101827);
+    }
+
+    .brand {
+      color: var(--accent);
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 2px;
+    }
+
+    h1 {
+      font-size: 25px;
+      margin: 9px 0 5px;
+    }
+
+    .subtitle {
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    main {
+      padding: 18px;
+      max-width: 800px;
+      margin: auto;
+    }
+
+    .card {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 17px;
+      padding: 17px;
+      margin-bottom: 15px;
+    }
+
+    .card h2 {
+      font-size: 16px;
+      margin: 0 0 12px;
+    }
+
+    .muted { color: var(--muted); }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(2,1fr);
+      gap: 10px;
+    }
+
+    .stat {
+      background: var(--panel2);
+      padding: 14px;
+      border-radius: 13px;
+    }
+
+    .stat strong {
+      display: block;
+      font-size: 23px;
+      margin-bottom: 4px;
+    }
+
+    .stat span {
+      font-size: 11px;
+      color: var(--muted);
+    }
+
+    .progress {
+      background: #344158;
+      height: 9px;
+      border-radius: 20px;
+      overflow: hidden;
+      margin: 12px 0 5px;
+    }
+
+    .progress div {
+      height: 100%;
+      background: var(--green);
+      width: 0%;
+      transition: width .3s;
+    }
+
+    .section-title {
+      font-size: 18px;
+      margin: 25px 0 13px;
+    }
+
+    .subject {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 13px;
+      padding: 14px;
+      margin-bottom: 9px;
+    }
+
+    .subject small {
+      display: block;
+      color: var(--muted);
+      margin-top: 5px;
+    }
+
+    button {
+      border: 0;
+      border-radius: 10px;
+      padding: 11px 14px;
+      background: var(--accent);
+      color: #071426;
+      font-weight: 750;
+      cursor: pointer;
+    }
+
+    button.secondary {
+      background: var(--panel2);
+      color: var(--text);
+      border: 1px solid var(--border);
+    }
+
+    button.done {
+      background: var(--green);
+      color: #071426;
+    }
+
+    button:disabled {
+      opacity: .5;
+      cursor: not-allowed;
+    }
+
+    .episode {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      padding: 15px;
+      border-radius: 15px;
+      margin-bottom: 12px;
+    }
+
+    .episode-header {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      align-items: flex-start;
+    }
+
+    .episode h3 {
+      font-size: 14px;
+      margin: 0 0 6px;
+    }
+
+    .episode p {
+      color: var(--muted);
+      font-size: 12px;
+      margin: 0 0 13px;
+    }
+
+    audio {
+      width: 100%;
+      height: 42px;
+      margin: 8px 0;
+    }
+
+    .actions {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .actions button {
+      font-size: 11px;
+      padding: 10px;
+    }
+
+    .status {
+      font-size: 11px;
+      color: var(--green);
+      margin-top: 8px;
+    }
+
+    .install {
+      width: 100%;
+      margin-top: 10px;
+      background: var(--green);
+    }
+
+    nav {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      display: flex;
+      justify-content: space-around;
+      background: rgba(16,24,39,.96);
+      border-top: 1px solid var(--border);
+      padding: 13px 5px max(13px,env(safe-area-inset-bottom));
+      z-index: 10;
+      backdrop-filter: blur(15px);
+    }
+
+    nav a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 11px;
+      text-align: center;
+    }
+
+    nav span {
+      display: block;
+      font-size: 19px;
+      margin-bottom: 4px;
+    }
+
+    .notice {
+      color: var(--muted);
+      font-size: 11px;
+      line-height: 1.5;
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <div class="brand">SEFAZ-SP • APOFP • C03</div>
+  <h1>Central de Estudos</h1>
+  <div class="subtitle">
+    Ciência de Dados e Inteligência Artificial
+  </div>
+</header>
+
+<main>
+
+  <section class="card" id="progresso">
+    <h2>🎯 Meta de aprovação</h2>
+    <div class="stats">
+      <div class="stat">
+        <strong>185+</strong>
+        <span>Meta de pontos</span>
+      </div>
+      <div class="stat">
+        <strong>TOP 5</strong>
+        <span>Objetivo estratégico</span>
+      </div>
+    </div>
+
+    <h2 style="margin-top:20px">Progresso geral</h2>
+    <div class="progress">
+      <div id="progressBar"></div>
+    </div>
+    <span class="muted" id="progressText">
+      0% concluído
+    </span>
+  </section>
+
+  <section class="card">
+    <h2>📚 Seu ambiente de estudos</h2>
+    <div class="stats">
+      <div class="stat">
+        <strong>Python</strong>
+        <span>Programação e dados</span>
+      </div>
+      <div class="stat">
+        <strong>SQL</strong>
+        <span>Banco de dados</span>
+      </div>
+      <div class="stat">
+        <strong>Power BI</strong>
+        <span>Business Intelligence</span>
+      </div>
+      <div class="stat">
+        <strong>IA</strong>
+        <span>Machine Learning</span>
+      </div>
+    </div>
+  </section>
+
+  <h2 class="section-title" id="disciplinas">
+    📖 Disciplinas C03
+  </h2>
+
+  <div id="subjects"></div>
+
+  <h2 class="section-title" id="podcasts">
+    🎧 Academia de Áudio
+  </h2>
+
+  <p class="muted" style="font-size:12px">
+    Aulas narradas com Lucas e Mariana para estudar em qualquer lugar.
+  </p>
+
+  <div id="episodes"></div>
+
+  <section class="card">
+    <h2>📲 Instalar no iPhone</h2>
+    <p class="notice">
+      Abra este endereço pelo Safari e utilize
+      Compartilhar → Adicionar à Tela de Início.
+    </p>
+    <button class="install" id="installBtn" hidden>
+      Instalar aplicativo
+    </button>
+  </section>
+
+  <p class="notice">
+    Seus áudios baixados são armazenados no dispositivo
+    pelo mecanismo de cache do navegador. A disponibilidade
+    offline depende da permanência desses dados no iOS.
+  </p>
+
+</main>
+
+<nav>
+  <a href="#"><span>🏠</span>Início</a>
+  <a href="#disciplinas"><span>📚</span>Matérias</a>
+  <a href="#podcasts"><span>🎧</span>Áudios</a>
+  <a href="#progresso"><span>📊</span>Progresso</a>
+</nav>
+
+<script>
+  const subjects = [
+    "Ciência de Dados",
+    "Inteligência Artificial",
+    "Python",
+    "SQL",
+    "Estatística",
+    "Power BI e DAX",
+    "Machine Learning",
+    "Engenharia de Dados"
+  ];
+
+  const episodes = [
+    {
+      id: "dax",
+      number: "01",
+      title: "DAX Avançado",
+      subject: "Power BI",
+      duration: "5–7 min",
+      audio: "audio/episodio-01-dax.mp3"
+    },
+    {
+      id: "scrum",
+      number: "02",
+      title: "Scrum na Prática de Prova",
+      subject: "Metodologias Ágeis",
+      duration: "5–7 min",
+      audio: "audio/episodio-02-scrum.mp3"
+    },
+    {
+      id: "lrf",
+      number: "03",
+      title: "LRF e Limites Fiscais",
+      subject: "Direito Financeiro",
+      duration: "6–8 min",
+      audio: "audio/episodio-03-lrf.mp3"
+    },
+    {
+      id: "matfin",
+      number: "04",
+      title: "Juros, Descontos e Amortização",
+      subject: "Matemática Financeira",
+      duration: "5–7 min",
+      audio: "audio/episodio-04-matfin.mp3"
+    },
+    {
+      id: "python",
+      number: "05",
+      title: "Python para Ciência de Dados",
+      subject: "Ciência de Dados (C03)",
+      duration: "6–8 min",
+      audio: "audio/episodio-05-python.mp3"
+    }
+  ];
+
+  const $ = id => document.getElementById(id);
+
+  function renderSubjects() {
+    const done = JSON.parse(
+      localStorage.getItem("c03_subjects") || "[]"
+    );
+
+    $("subjects").innerHTML = subjects.map((name, i) => {
+      const isDone = done.includes(i);
+      return `
+        <div class="subject">
+          <div>
+            <strong>${name}</strong>
+            <small>Especialidade C03</small>
+          </div>
+          <button class="${isDone ? "done" : "secondary"}"
+            onclick="markSubject(${i})">${isDone ? "✓ Concluído" : "Concluir"}</button>
+        </div>
+      `;
+    }).join("");
+  }
+
+  function updateProgress() {
+    const done = JSON.parse(
+      localStorage.getItem("c03_subjects") || "[]"
+    );
+
+    const percent = Math.round(
+      done.length / subjects.length * 100
+    );
+
+    $("progressBar").style.width = percent + "%";
+    $("progressText").textContent =
+      `${percent}% concluído • ${done.length}/${subjects.length} matérias`;
+  }
+
+  function markSubject(index) {
+    const done = JSON.parse(
+      localStorage.getItem("c03_subjects") || "[]"
+    );
+
+    const next = done.includes(index)
+      ? done.filter(x => x !== index)
+      : [...done, index];
+
+    localStorage.setItem("c03_subjects", JSON.stringify(next));
+    renderSubjects();
+    updateProgress();
+  }
+
+  async function renderEpisodes() {
+    $("episodes").innerHTML = episodes.map(ep => `
+      <article class="episode">
+        <div class="episode-header">
+          <div>
+            <h3>Episódio ${ep.number} — ${ep.title}</h3>
+            <p>${ep.subject} • ${ep.duration}</p>
+          </div>
+          <span>🎙️</span>
+        </div>
+
+        <audio controls preload="none"
+          src="${ep.audio}"></audio>
+
+        <div class="actions">
+          <button onclick="downloadEpisode('${ep.id}')">
+            ⬇ Baixar para offline
+          </button>
+          <button class="secondary"
+            onclick="removeEpisode('${ep.id}')">
+            Remover download
+          </button>
+        </div>
+
+        <div class="status" id="status-${ep.id}">
+          Streaming disponível quando conectado.
+        </div>
+      </article>
+    `).join("");
+
+    if ("caches" in window) {
+      const cache = await caches.open("c03-audios-v1");
+      for (const ep of episodes) {
+        const match = await cache.match(new Request(new URL(ep.audio, location.href)));
+        if (match) {
+          $("status-" + ep.id).textContent = "✓ Episódio disponível offline.";
+        }
+      }
+    }
+  }
+
+  async function downloadEpisode(id) {
+    const ep = episodes.find(x => x.id === id);
+    const status = $("status-" + id);
+
+    status.textContent = "Baixando episódio...";
+
+    try {
+      const response = await fetch(ep.audio);
+
+      if (!response.ok) {
+        throw new Error("Arquivo não encontrado.");
+      }
+
+      const cache = await caches.open("c03-audios-v1");
+      await cache.put(
+        new Request(new URL(ep.audio, location.href)),
+        response.clone()
+      );
+
+      status.textContent = "✓ Episódio disponível offline.";
+    } catch (error) {
+      status.textContent =
+        "Não foi possível baixar. Verifique o arquivo MP3 na pasta audio/ e a conexão.";
+    }
+  }
+
+  async function removeEpisode(id) {
+    const ep = episodes.find(x => x.id === id);
+
+    const cache = await caches.open("c03-audios-v1");
+
+    await cache.delete(
+      new Request(new URL(ep.audio, location.href))
+    );
+
+    $("status-" + id).textContent = "Download removido.";
+  }
+
+  let installPrompt;
+
+  window.addEventListener("beforeinstallprompt", event => {
+    event.preventDefault();
+    installPrompt = event;
+    $("installBtn").hidden = false;
+  });
+
+  $("installBtn").addEventListener("click", async () => {
+    if (!installPrompt) return;
+
+    installPrompt.prompt();
+    await installPrompt.userChoice;
+    installPrompt = null;
+    $("installBtn").hidden = true;
+  });
+
+  if ("serviceWorker" in navigator) {
+    window.addEventListener("load", () => {
+      navigator.serviceWorker.register("./sw.js")
+        .catch(console.error);
+    });
+  }
+
+  renderSubjects();
+  renderEpisodes();
+  updateProgress();
+</script>
+
+</body>
+</html>

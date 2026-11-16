@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg"
+     viewBox="0 0 512 512">
+  <rect width="512" height="512" rx="110"
+        fill="#172a48"/>
+  <path d="M256 75 L420 150 L256 225 L92 150 Z"
+        fill="#52a7ff"/>
+  <path d="M125 185 V310 Q256 420 387 310 V185"
+        fill="none" stroke="#35cf91"
+        stroke-width="25" stroke-linecap="round"/>
+  <text x="256" y="290"
+        font-size="100"
+        text-anchor="middle"
+        font-weight="bold"
+        fill="white">C03</text>
+  <text x="256" y="370"
+        font-size="35"
+        text-anchor="middle"
+        fill="white">SEFAZ-SP</text>
+</svg>
