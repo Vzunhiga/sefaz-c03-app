@@ -117,7 +117,7 @@
       border-radius: 16px;
       padding: 18px;
       cursor: pointer;
-      transition: transform 0.15s ease, box-shadow 0.15s ease;
+      transition: transform 0.15s ease;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
@@ -275,10 +275,16 @@
       font-size: 12px;
     }
 
+    .subject-actions {
+      display: flex;
+      gap: 6px;
+      flex-shrink: 0;
+    }
+
     .btn-action {
       border: none;
       border-radius: 10px;
-      padding: 9px 14px;
+      padding: 9px 12px;
       font-size: 12px;
       font-weight: 600;
       cursor: pointer;
@@ -294,6 +300,37 @@
     .btn-primary {
       background: var(--navy);
       color: #ffffff;
+    }
+
+    /* Study Content Reader (Resumos & Roteiros) */
+    .lesson-body {
+      font-size: 14px;
+      line-height: 1.65;
+      color: #1f2937;
+    }
+
+    .lesson-body h3 {
+      font-size: 16px;
+      color: var(--navy);
+      margin: 18px 0 8px;
+    }
+
+    .lesson-body ul {
+      padding-left: 18px;
+      margin: 8px 0 14px;
+    }
+
+    .lesson-body li {
+      margin-bottom: 6px;
+    }
+
+    .flash-box {
+      background: #f0fdf4;
+      border-left: 4px solid var(--accent-green);
+      padding: 12px 14px;
+      border-radius: 8px;
+      margin-top: 16px;
+      font-size: 13px;
     }
 
     /* Episodes */
@@ -325,6 +362,7 @@
       display: flex;
       gap: 8px;
       margin-top: 6px;
+      flex-wrap: wrap;
     }
 
     .ep-status {
@@ -332,6 +370,10 @@
       color: var(--badge-green-text);
       margin-top: 8px;
       font-weight: 500;
+    }
+
+    .ep-status.error {
+      color: #dc2626;
     }
 
     /* Progress Card */
@@ -518,11 +560,18 @@
     </div>
   </section>
 
-  <!-- CONTEÚDO VIEW -->
+  <!-- CONTEÚDO VIEW (LISTA) -->
   <section id="view-conteudo" class="view-section">
     <button class="back-btn" onclick="switchView('home', 'Tela inicial')">← Voltar à Tela inicial</button>
-    <h2 class="section-heading">📖 Conteúdo & Disciplinas C03</h2>
+    <h2 class="section-heading">📖 Conteúdo & Resumos C03</h2>
+    <p style="font-size:13px; color:var(--muted); margin-top:-8px; margin-bottom:14px;">Toque em "Ler aula" para abrir a teoria completa e o roteiro escrito.</p>
     <div id="subjectsList"></div>
+  </section>
+
+  <!-- LEITOR DE AULA ESCRITA VIEW -->
+  <section id="view-leitor" class="view-section">
+    <button class="back-btn" onclick="switchView('conteudo', 'Conteúdo')">← Voltar para Disciplinas</button>
+    <div class="item-card lesson-body" id="lessonReaderContent"></div>
   </section>
 
   <!-- PODCASTS VIEW -->
@@ -567,31 +616,245 @@
 <div class="mini-player" id="miniPlayer">
   <div style="min-width:0; flex:1;">
     <strong id="miniTitle" style="display:block; font-size:13px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">Episódio 01 — DAX Avançado</strong>
-    <audio id="globalAudio" controls style="height:34px; margin:4px 0 0;"></audio>
+    <audio id="globalAudio" controls playsinline style="height:34px; margin:4px 0 0;"></audio>
   </div>
 </div>
 
 <script>
   const subjects = [
-    { name: "Power BI e DAX Avançado", desc: "Contexto de linha, filtro, CALCULATE e Inteligência de Tempo" },
-    { name: "Metodologias Ágeis (Scrum)", desc: "Pilares, papéis, eventos, time-boxes e artefatos" },
-    { name: "Direito Financeiro (LRF)", desc: "RCL, limites de despesa com pessoal, regra de ouro e ARO" },
-    { name: "Matemática Financeira", desc: "Taxas equivalentes, descontos e sistemas SAC/Price" },
-    { name: "Python para Ciência de Dados", desc: "NumPy, Pandas (.loc/.iloc) e Scikit-learn anti-leakage" },
-    { name: "SQL e Banco de Dados", desc: "Consultas analíticas, window functions e modelagem" },
-    { name: "Estatística e Probabilidade", desc: "Inferência, distribuições e testes de hipóteses" },
-    { name: "Machine Learning e IA", desc: "Modelos supervisionados, validação cruzada e métricas" }
+    {
+      name: "01. Power BI e DAX Avançado",
+      desc: "Contexto de linha, filtro, CALCULATE e Inteligência de Tempo",
+      content: `
+        <h2 style="margin-top:0;">Power BI e DAX Avançado</h2>
+        <h3>1. Contexto de Linha vs. Contexto de Filtro</h3>
+        <ul>
+          <li><strong>Contexto de Linha:</strong> Avalia a fórmula linha por linha (colunas calculadas e funções iteradoras como <code>SUMX</code>, <code>FILTER</code>). Não filtra o restante da tabela automaticamente.</li>
+          <li><strong>Contexto de Filtro:</strong> Conjunto de restrições aplicadas antes do cálculo da medida (segmentadores, filtros de página e eixos de visuais).</li>
+        </ul>
+        <h3>2. Superpoderes da CALCULATE</h3>
+        <ul>
+          <li>Única função em DAX capaz de <strong>modificar o contexto de filtro</strong> existente (sobrescrevendo filtros externos) e executar a <strong>Transição de Contexto</strong> (transforma valores da linha atual em filtros equivalentes).</li>
+        </ul>
+        <h3>3. Modificadores de Filtro e Inteligência de Tempo</h3>
+        <ul>
+          <li><strong>ALL:</strong> Remove todos os filtros da tabela/coluna (ideal para total geral).</li>
+          <li><strong>ALLEXCEPT:</strong> Remove todos os filtros, exceto das colunas especificadas (subtotais).</li>
+          <li><strong>ALLSELECTED:</strong> Remove filtros internos do visual, mas respeita segmentadores externos (total dinâmico).</li>
+          <li><strong>Inteligência de Tempo:</strong> Exige uma <strong>Tabela Calendário</strong> dedicada, contínua (sem buracos) e marcada como tabela de data para funções como <code>SAMEPERIODLASTYEAR</code>, <code>TOTALYTD</code> e <code>DATEADD</code>.</li>
+        </ul>
+        <div class="flash-box">
+          <strong>Resumo Relâmpago:</strong> CALCULATE altera filtros e faz transição de contexto; ALL ignora tudo; ALLEXCEPT preserva a coluna escolhida; ALLSELECTED respeita filtros externos.
+        </div>
+      `
+    },
+    {
+      name: "02. Metodologias Ágeis (Scrum)",
+      desc: "Pilares, papéis, eventos, time-boxes e artefatos",
+      content: `
+        <h2 style="margin-top:0;">Metodologias Ágeis — Scrum</h2>
+        <h3>1. Pilares do Empirismo</h3>
+        <ul>
+          <li><strong>Transparência, Inspeção e Adaptação.</strong></li>
+        </ul>
+        <h3>2. Responsabilidades do Time Scrum (Sem hierarquia)</h3>
+        <ul>
+          <li><strong>Product Owner (PO):</strong> Uma <em>única pessoa</em> (não é comitê). Maximiza o valor do produto e gerencia o Product Backlog.</li>
+          <li><strong>Scrum Master:</strong> Líder servidor que garante o Scrum conforme o guia e remove impedimentos.</li>
+          <li><strong>Developers:</strong> Comprometidos em criar qualquer aspecto de um incremento utilizável a cada Sprint.</li>
+        </ul>
+        <h3>3. Eventos e Time-boxes (Sprint de até 1 mês)</h3>
+        <ul>
+          <li><strong>Sprint Planning:</strong> Máx. <strong>8 horas</strong> (Por que? O que? Como?).</li>
+          <li><strong>Daily Scrum:</strong> Máx. <strong>15 minutos</strong> (exclusivo para Developers inspecionarem progresso rumo à Meta da Sprint).</li>
+          <li><strong>Sprint Review:</strong> Máx. <strong>4 horas</strong> (inspecionar incremento com stakeholders e adaptar Product Backlog).</li>
+          <li><strong>Sprint Retrospective:</strong> Máx. <strong>3 horas</strong> (foco em processo, pessoas, interações e qualidade).</li>
+        </ul>
+        <h3>4. Artefatos e Compromissos</h3>
+        <ul>
+          <li><strong>Product Backlog</strong> &rarr; Meta do Produto (Product Goal)</li>
+          <li><strong>Sprint Backlog</strong> &rarr; Meta da Sprint (Sprint Goal)</li>
+          <li><strong>Incremento</strong> &rarr; Definição de Pronto (Definition of Done - DoD)</li>
+        </ul>
+        <div class="flash-box">
+          <strong>Resumo Relâmpago:</strong> Time-boxes (8h, 15m, 4h, 3h). PO é 1 pessoa. Incremento só nasce ao atingir a Definição de Pronto.
+        </div>
+      `
+    },
+    {
+      name: "03. Direito Financeiro (LRF)",
+      desc: "RCL, limites de despesa com pessoal, regra de ouro e ARO",
+      content: `
+        <h2 style="margin-top:0;">Lei de Responsabilidade Fiscal (LC 101/2000)</h2>
+        <h3>1. Receita Corrente Líquida (RCL)</h3>
+        <ul>
+          <li>Apurada somando-se as receitas correntes arrecadadas no <strong>mês em referência e nos 11 meses anteriores</strong> (período móvel de 12 meses), excluídas as duplicidades.</li>
+        </ul>
+        <h3>2. Limites de Despesa Total com Pessoal</h3>
+        <ul>
+          <li><strong>União:</strong> 50% da RCL | <strong>Estados:</strong> 60% da RCL | <strong>Municípios:</strong> 60% da RCL.</li>
+          <li><strong>Repartição nos Estados (60%):</strong> Executivo <strong>49%</strong>, Judiciário <strong>6%</strong>, Legislativo + TCE <strong>3%</strong>, Ministério Público <strong>2%</strong>.</li>
+        </ul>
+        <h3>3. Degraus de Controle de Pessoal</h3>
+        <ul>
+          <li><strong>90% (Alerta):</strong> Tribunal de Contas emite alerta.</li>
+          <li><strong>95% (Prudencial):</strong> Vedações (reajustes, criação de cargos, provimentos — <em>salvo reposição por aposentadoria/falecimento em educação, saúde e segurança</em> — e hora extra).</li>
+          <li><strong>100% (Máximo):</strong> Excedente eliminado nos <strong>2 quadrimestres seguintes</strong> (pelo menos <strong>1/3 no primeiro</strong>).</li>
+        </ul>
+        <h3>4. Regra de Ouro e ARO</h3>
+        <ul>
+          <li><strong>Regra de Ouro:</strong> Veda operações de crédito que excedam as despesas de capital.</li>
+          <li><strong>ARO (Antecipação de Receita Orçamentária):</strong> Liquidação até <strong>10 de dezembro</strong> e proibida no último ano de mandato.</li>
+        </ul>
+        <div class="flash-box">
+          <strong>Resumo Relâmpago:</strong> RCL = 12 meses. Estados = 60% (49% Exec, 6% Jud, 3% Leg/TCE, 2% MP). Prudencial (95%) permite reposição em educação, saúde e segurança.
+        </div>
+      `
+    },
+    {
+      name: "04. Matemática Financeira",
+      desc: "Taxas equivalentes, descontos e sistemas SAC/Price",
+      content: `
+        <h2 style="margin-top:0;">Matemática Financeira</h2>
+        <h3>1. Taxas Proporcionais vs. Equivalentes</h3>
+        <ul>
+          <li><strong>Juros Simples:</strong> Usa taxas proporcionais (multiplica ou divide diretamente: 2% a.m. = 24% a.a.).</li>
+          <li><strong>Juros Compostos:</strong> Usa taxas equivalentes: <code>(1 + i_anual) = (1 + i_mensal)^12</code>.</li>
+        </ul>
+        <h3>2. Taxa Nominal vs. Taxa Efetiva</h3>
+        <ul>
+          <li><strong>Taxa Nominal:</strong> Unidade da taxa diferente do período de capitalização (ex.: 24% a.a. capitalizados mensalmente). Divida proporcionalmente primeiro para achar a <strong>Taxa Efetiva</strong> (2% a.m.) antes de capitalizar.</li>
+        </ul>
+        <h3>3. Descontos ("Por Fora" vs. "Por Dentro")</h3>
+        <ul>
+          <li><strong>Desconto Comercial ("por fora"):</strong> Incide sobre o Valor Nominal (N). <code>Dc = N * i * t</code>.</li>
+          <li><strong>Desconto Racional ("por dentro"):</strong> Incide sobre o Valor Atual (A). <code>Dr = A * i * t</code>.</li>
+          <li><strong>Relação de Ouro (Simples):</strong> <code>Dc = Dr * (1 + i * t)</code>.</li>
+        </ul>
+        <h3>4. Sistemas de Amortização</h3>
+        <ul>
+          <li><strong>SAC:</strong> Amortização constante; juros e prestações decrescentes em PA.</li>
+          <li><strong>Tabela Price:</strong> Prestações constantes; juros decrescentes e amortização crescente em PG.</li>
+        </ul>
+        <div class="flash-box">
+          <strong>Resumo Relâmpago:</strong> Simples = Proporcional; Composto = Equivalente. Comercial = sobre N; Racional = sobre A. SAC = Amortização constante; Price = Prestação constante.
+        </div>
+      `
+    },
+    {
+      name: "05. Python para Ciência de Dados",
+      desc: "NumPy, Pandas (.loc/.iloc) e Scikit-learn anti-leakage",
+      content: `
+        <h2 style="margin-top:0;">Python para Ciência de Dados</h2>
+        <h3>1. NumPy (ndarray)</h3>
+        <ul>
+          <li>Mais rápido que listas nativas por ter <strong>tipos homogêneos</strong> e alocação <strong>contígua na memória</strong> (vetorização em C).</li>
+          <li><strong>Slicing:</strong> Cria uma <em>view</em> (altera o array original). Use <code>.copy()</code> para criar cópia independente.</li>
+        </ul>
+        <h3>2. Pandas (Series, DataFrame, .loc vs .iloc)</h3>
+        <ul>
+          <li><strong>.loc:</strong> Acessa por <strong>rótulo (label)</strong> e o fatiamento final é <strong>inclusivo</strong>.</li>
+          <li><strong>.iloc:</strong> Acessa por <strong>posição inteira</strong> (base 0) e o fatiamento final é <strong>exclusivo</strong>.</li>
+          <li><strong>Nulos e Junções:</strong> <code>isna()</code>, <code>dropna()</code>, <code>fillna()</code>. <code>merge()</code> une por colunas-chave (JOIN SQL); <code>concat()</code> empilha por eixo.</li>
+        </ul>
+        <h3>3. Scikit-learn e Prevenção de Data Leakage</h3>
+        <ul>
+          <li>Após <code>train_test_split</code>: aplique <code>fit_transform()</code> <strong>apenas no treino</strong> e apenas <code>transform()</code> <strong>no teste</strong> (nunca dê <code>fit</code> nos dados de teste!).</li>
+        </ul>
+        <div class="flash-box">
+          <strong>Resumo Relâmpago:</strong> Slicing NumPy = view. .loc = rótulo inclusivo; .iloc = posição exclusiva. Treino = fit_transform(); Teste = transform().
+        </div>
+      `
+    },
+    {
+      name: "06. SQL e Banco de Dados",
+      desc: "Ordem de execução, Window Functions e Modelagem Dimensional",
+      content: `
+        <h2 style="margin-top:0;">SQL e Banco de Dados</h2>
+        <h3>1. Ordem Lógica de Execução</h3>
+        <ul>
+          <li><code>FROM / JOIN</code> &rarr; <code>WHERE</code> (filtra linhas) &rarr; <code>GROUP BY</code> &rarr; <code>HAVING</code> (filtra grupos agregados) &rarr; <code>SELECT</code> &rarr; <code>DISTINCT</code> &rarr; <code>ORDER BY</code> &rarr; <code>LIMIT</code>.</li>
+        </ul>
+        <h3>2. Window Functions (OVER)</h3>
+        <ul>
+          <li>Calculam agregações ou rankings sem colapsar as linhas originais da tabela.</li>
+          <li><strong>Empate (100, 100, 90):</strong> <code>ROW_NUMBER()</code> = 1, 2, 3 | <code>RANK()</code> = 1, 1, 3 | <code>DENSE_RANK()</code> = 1, 1, 2.</li>
+          <li><code>LAG()</code> busca linha anterior; <code>LEAD()</code> busca linha seguinte.</li>
+        </ul>
+        <h3>3. Modelagem Dimensional (Data Warehouse)</h3>
+        <ul>
+          <li><strong>Star Schema (Estrela):</strong> Tabela Fato central ligada a Dimensões desnormalizadas (menos JOINs, consultas mais rápidas).</li>
+          <li><strong>Snowflake (Floco de Neve):</strong> Dimensões normalizadas em subdimensões (economiza espaço, exige mais JOINs).</li>
+        </ul>
+        <div class="flash-box">
+          <strong>Resumo Relâmpago:</strong> WHERE antes do GROUP BY; HAVING depois. RANK pula posição no empate; DENSE_RANK não pula. Star Schema = desnormalizado.
+        </div>
+      `
+    },
+    {
+      name: "07. Estatística e Probabilidade",
+      desc: "Assimetria, distribuições (Binomial, Poisson, Normal) e p-valor",
+      content: `
+        <h2 style="margin-top:0;">Estatística e Probabilidade</h2>
+        <h3>1. Assimetria</h3>
+        <ul>
+          <li><strong>Assimétrica à Direita (Positiva):</strong> Cauda longa à direita &rarr; <code>Média &gt; Mediana &gt; Moda</code>.</li>
+          <li><strong>Assimétrica à Esquerda (Negativa):</strong> Cauda longa à esquerda &rarr; <code>Média &lt; Mediana &lt; Moda</code>.</li>
+        </ul>
+        <h3>2. Distribuições Principais</h3>
+        <ul>
+          <li><strong>Binomial (Discreta):</strong> Número fixo <em>n</em> de tentativas independentes com probabilidade constante <em>p</em>.</li>
+          <li><strong>Poisson (Discreta):</strong> Eventos raros em intervalo contínuo de tempo/espaço. Propriedade chave: <strong>Média = Variância</strong>.</li>
+          <li><strong>Normal (Contínua):</strong> Regra empírica: <strong>68%</strong> (&plusmn;1&sigma;), <strong>95%</strong> (&plusmn;2&sigma;), <strong>99,7%</strong> (&plusmn;3&sigma;). Teorema Central do Limite (TCL): médias amostrais tendem à Normal.</li>
+        </ul>
+        <h3>3. Testes de Hipóteses</h3>
+        <ul>
+          <li><strong>Regra do p-valor:</strong> Se <code>p-valor &le; &alpha;</code>, <strong>rejeita H0</strong>.</li>
+          <li><strong>Erro Tipo I (&alpha;):</strong> Rejeitar H0 verdadeira (Falso Positivo).</li>
+          <li><strong>Erro Tipo II (&beta;):</strong> Não rejeitar H0 falsa (Falso Negativo). Poder do teste = <code>1 - &beta;</code>.</li>
+        </ul>
+        <div class="flash-box">
+          <strong>Resumo Relâmpago:</strong> Poisson tem Média = Variância. p-valor &le; &alpha; rejeita H0. Erro Tipo I = rejeitar H0 verdadeira.
+        </div>
+      `
+    },
+    {
+      name: "08. Machine Learning e IA",
+      desc: "Supervisionado vs Não Supervisionado, Overfitting e Métricas",
+      content: `
+        <h2 style="margin-top:0;">Machine Learning e Inteligência Artificial</h2>
+        <h3>1. Paradigmas de Aprendizado</h3>
+        <ul>
+          <li><strong>Supervisionado (com rótulo):</strong> Classificação (categoria) e Regressão (valor contínuo).</li>
+          <li><strong>Não Supervisionado (sem rótulo):</strong> Clusterização (K-Means) e Redução de Dimensionalidade (PCA).</li>
+        </ul>
+        <h3>2. Underfitting vs. Overfitting</h3>
+        <ul>
+          <li><strong>Underfitting:</strong> Modelo simples demais (alto viés), erra no treino e no teste.</li>
+          <li><strong>Overfitting:</strong> Modelo decorou ruído do treino (alta variância), acerta treino e erra teste. Combate: mais dados, poda e <strong>Regularização</strong> (Lasso L1 zera pesos; Ridge L2 penaliza pesos grandes).</li>
+        </ul>
+        <h3>3. Validação e Métricas (Classes Desbalanceadas)</h3>
+        <ul>
+          <li>Use <strong>Stratified K-Fold</strong> para manter a proporção das classes nas dobras.</li>
+          <li><strong>Precisão:</strong> <code>VP / (VP + FP)</code> (evita Falso Positivo).</li>
+          <li><strong>Recall (Revocação):</strong> <code>VP / (VP + FN)</code> (evita Falso Negativo).</li>
+          <li><strong>F1-Score:</strong> Média harmônica entre Precisão e Recall.</li>
+        </ul>
+        <div class="flash-box">
+          <strong>Resumo Relâmpago:</strong> Overfitting = alta variância (combate com L1/L2). Precision evita Falso Positivo; Recall evita Falso Negativo.
+        </div>
+      `
+    }
   ];
 
-  // Ajuste para .m4a caso seus arquivos na pasta audio/ estejam com extensão .m4a
-  const AUDIO_EXT = "mp3";
-
+  // Seus arquivos na pasta audio/ do GitHub foram enviados como .m4a (ex: episodio-01-dax.m4a)
+  // Caso estejam em .mp3, o player tentará automaticamente o formato alternativo se o primeiro falhar!
   const episodes = [
-    { id: "dax", number: "01", title: "DAX Avançado", meta: "Lucas e Mariana · 5–7 minutos", audio: `audio/episodio-01-dax.${AUDIO_EXT}` },
-    { id: "scrum", number: "02", title: "Scrum na Prática de Prova", meta: "Lucas e Mariana · 5–7 minutos", audio: `audio/episodio-02-scrum.${AUDIO_EXT}` },
-    { id: "lrf", number: "03", title: "LRF e Limites Fiscais", meta: "Lucas e Mariana · 6–8 minutos", audio: `audio/episodio-03-lrf.${AUDIO_EXT}` },
-    { id: "matfin", number: "04", title: "Juros, Descontos e Amortização", meta: "Lucas e Mariana · 5–7 minutos", audio: `audio/episodio-04-matfin.${AUDIO_EXT}` },
-    { id: "python", number: "05", title: "Python para Ciência de Dados", meta: "Lucas e Mariana · 6–8 minutos", audio: `audio/episodio-05-python.${AUDIO_EXT}` }
+    { id: "dax", number: "01", title: "DAX Avançado", meta: "Lucas e Mariana · 5–7 minutos", base: "audio/episodio-01-dax" },
+    { id: "scrum", number: "02", title: "Scrum na Prática de Prova", meta: "Lucas e Mariana · 5–7 minutos", base: "audio/episodio-02-scrum" },
+    { id: "lrf", number: "03", title: "LRF e Limites Fiscais", meta: "Lucas e Mariana · 6–8 minutos", base: "audio/episodio-03-lrf" },
+    { id: "matfin", number: "04", title: "Juros, Descontos e Amortização", meta: "Lucas e Mariana · 5–7 minutos", base: "audio/episodio-04-matfin" },
+    { id: "python", number: "05", title: "Python para Ciência de Dados", meta: "Lucas e Mariana · 6–8 minutos", base: "audio/episodio-05-python" }
   ];
 
   const questions = [
@@ -609,6 +872,16 @@
       q: "3. (Python / Scikit-learn) Para evitar Data Leakage, qual método deve ser aplicado nos dados de TESTE?",
       opts: ["fit_transform()", "fit()", "transform()", "predict_fit()"],
       ans: 2
+    },
+    {
+      q: "4. (SQL) Em um empate com valores 100, 100 e 90, qual sequência a função DENSE_RANK() retorna?",
+      opts: ["1, 2, 3", "1, 1, 3", "1, 1, 2", "1, 2, 2"],
+      ans: 2
+    },
+    {
+      q: "5. (Estatística) Em qual distribuição discreta a média é numericamente igual à variância?",
+      opts: ["Binomial", "Normal", "Poisson", "Uniforme"],
+      ans: 2
     }
   ];
 
@@ -621,14 +894,22 @@
     window.scrollTo({ top: 0, behavior: "smooth" });
   }
 
+  function openLesson(index) {
+    const sub = subjects[index];
+    $("lessonReaderContent").innerHTML = sub.content;
+    switchView("leitor", "Leitura");
+  }
+
   function playFeatured() {
     const ep = episodes[0];
     $("miniTitle").textContent = `Episódio ${ep.number} — ${ep.title}`;
     $("miniPlayer").classList.add("visible");
     const player = $("globalAudio");
-    if (!player.src.endsWith(ep.audio)) {
-      player.src = ep.audio;
-    }
+    player.innerHTML = `
+      <source src="${ep.base}.m4a" type="audio/mp4">
+      <source src="${ep.base}.mp3" type="audio/mpeg">
+    `;
+    player.load();
     player.play().catch(() => {
       switchView("podcasts", "Podcasts");
     });
@@ -640,13 +921,16 @@
       const isDone = done.includes(i);
       return `
         <div class="item-card subject-row">
-          <div>
+          <div style="cursor:pointer; flex:1;" onclick="openLesson(${i})">
             <strong>${sub.name}</strong>
             <small>${sub.desc}</small>
           </div>
-          <button class="btn-action ${isDone ? "done" : ""}" onclick="toggleSubject(${i})">
-            ${isDone ? "✓ Concluído" : "Concluir"}
-          </button>
+          <div class="subject-actions">
+            <button class="btn-action btn-primary" onclick="openLesson(${i})">Ler</button>
+            <button class="btn-action ${isDone ? "done" : ""}" onclick="toggleSubject(${i})">
+              ${isDone ? "✓" : "Concluir"}
+            </button>
+          </div>
         </div>
       `;
     }).join("");
@@ -676,46 +960,74 @@
             <p>${ep.meta}</p>
           </div>
         </div>
-        <audio controls preload="none" src="${ep.audio}"></audio>
+        <audio controls preload="metadata" playsinline id="audio-${ep.id}">
+          <source src="${ep.base}.m4a" type="audio/mp4">
+          <source src="${ep.base}.mp3" type="audio/mpeg">
+        </audio>
         <div class="ep-actions">
           <button class="btn-action btn-primary" onclick="downloadEpisode('${ep.id}')">⬇ Baixar offline</button>
           <button class="btn-action" onclick="removeEpisode('${ep.id}')">Remover</button>
         </div>
-        <div class="ep-status" id="status-${ep.id}">Disponível para streaming</div>
+        <div class="ep-status" id="status-${ep.id}">Pronto para reproduzir</div>
       </div>
     `).join("");
 
     if ("caches" in window) {
       const cache = await caches.open("c03-audios-v1");
       for (const ep of episodes) {
-        const match = await cache.match(new Request(new URL(ep.audio, location.href)));
-        if (match) {
+        const m4aMatch = await cache.match(new Request(new URL(ep.base + ".m4a", location.href)));
+        const mp3Match = await cache.match(new Request(new URL(ep.base + ".mp3", location.href)));
+        if (m4aMatch || mp3Match) {
           $("status-" + ep.id).textContent = "✓ Salvo offline no dispositivo";
         }
       }
     }
   }
 
+  async function resolveAudioUrl(base) {
+    for (const ext of [".m4a", ".mp3"]) {
+      try {
+        const res = await fetch(base + ext, { method: "HEAD" });
+        if (res.ok) return base + ext;
+      } catch {}
+    }
+    return null;
+  }
+
   async function downloadEpisode(id) {
     const ep = episodes.find(x => x.id === id);
     const status = $("status-" + id);
-    status.textContent = "Baixando episódio...";
+    status.classList.remove("error");
+    status.textContent = "Localizando arquivo de áudio...";
+
+    const validUrl = await resolveAudioUrl(ep.base);
+    if (!validUrl) {
+      status.classList.add("error");
+      status.textContent = "Arquivo não encontrado na pasta audio/ (.m4a ou .mp3). Verifique o nome no GitHub.";
+      return;
+    }
+
+    status.textContent = "Baixando episódio para offline...";
     try {
-      const res = await fetch(ep.audio);
+      const res = await fetch(validUrl);
       if (!res.ok) throw new Error();
       const cache = await caches.open("c03-audios-v1");
-      await cache.put(new Request(new URL(ep.audio, location.href)), res.clone());
+      await cache.put(new Request(new URL(validUrl, location.href)), res.clone());
       status.textContent = "✓ Salvo offline no dispositivo";
     } catch {
-      status.textContent = "Erro ao baixar. Verifique o arquivo na pasta audio/.";
+      status.classList.add("error");
+      status.textContent = "Falha ao salvar no cache do iOS.";
     }
   }
 
   async function removeEpisode(id) {
     const ep = episodes.find(x => x.id === id);
     const cache = await caches.open("c03-audios-v1");
-    await cache.delete(new Request(new URL(ep.audio, location.href)));
-    $("status-" + id).textContent = "Download removido";
+    await cache.delete(new Request(new URL(ep.base + ".m4a", location.href)));
+    await cache.delete(new Request(new URL(ep.base + ".mp3", location.href)));
+    const status = $("status-" + id);
+    status.classList.remove("error");
+    status.textContent = "Download removido";
   }
 
   function renderQuiz() {
