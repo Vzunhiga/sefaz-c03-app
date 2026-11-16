@@ -549,7 +549,7 @@
         </div>
         <div class="featured-info">
           <strong>Episódio 01 — DAX Avançado</strong>
-          <span>Lucas e Mariana · 5–7 minutos</span>
+          <span>Lucas e Mariana · Episódio completo</span>
         </div>
       </div>
       <div class="play-circle-outline">
@@ -564,7 +564,7 @@
   <section id="view-conteudo" class="view-section">
     <button class="back-btn" onclick="switchView('home', 'Tela inicial')">← Voltar à Tela inicial</button>
     <h2 class="section-heading">📖 Conteúdo & Resumos C03</h2>
-    <p style="font-size:13px; color:var(--muted); margin-top:-8px; margin-bottom:14px;">Toque em "Ler aula" para abrir a teoria completa e o roteiro escrito.</p>
+    <p style="font-size:13px; color:var(--muted); margin-top:-8px; margin-bottom:14px;">Toque em "Ler" para abrir a teoria completa e o resumo escrito de cada disciplina.</p>
     <div id="subjectsList"></div>
   </section>
 
@@ -847,14 +847,16 @@
     }
   ];
 
-  // Seus arquivos na pasta audio/ do GitHub foram enviados como .m4a (ex: episodio-01-dax.m4a)
-  // Caso estejam em .mp3, o player tentará automaticamente o formato alternativo se o primeiro falhar!
+  // Todos os 8 episódios completos (aceita .m4a ou .mp3 automaticamente e exibe a duração real do arquivo)
   const episodes = [
-    { id: "dax", number: "01", title: "DAX Avançado", meta: "Lucas e Mariana · 5–7 minutos", base: "audio/episodio-01-dax" },
-    { id: "scrum", number: "02", title: "Scrum na Prática de Prova", meta: "Lucas e Mariana · 5–7 minutos", base: "audio/episodio-02-scrum" },
-    { id: "lrf", number: "03", title: "LRF e Limites Fiscais", meta: "Lucas e Mariana · 6–8 minutos", base: "audio/episodio-03-lrf" },
-    { id: "matfin", number: "04", title: "Juros, Descontos e Amortização", meta: "Lucas e Mariana · 5–7 minutos", base: "audio/episodio-04-matfin" },
-    { id: "python", number: "05", title: "Python para Ciência de Dados", meta: "Lucas e Mariana · 6–8 minutos", base: "audio/episodio-05-python" }
+    { id: "dax", number: "01", title: "DAX Avançado", base: "audio/episodio-01-dax" },
+    { id: "scrum", number: "02", title: "Scrum na Prática de Prova", base: "audio/episodio-02-scrum" },
+    { id: "lrf", number: "03", title: "LRF e Limites Fiscais", base: "audio/episodio-03-lrf" },
+    { id: "matfin", number: "04", title: "Juros, Descontos e Amortização", base: "audio/episodio-04-matfin" },
+    { id: "python", number: "05", title: "Python para Ciência de Dados", base: "audio/episodio-05-python" },
+    { id: "sql", number: "06", title: "SQL e Banco de Dados", base: "audio/episodio-06-sql" },
+    { id: "estatistica", number: "07", title: "Estatística e Probabilidade", base: "audio/episodio-07-estatistica" },
+    { id: "ml", number: "08", title: "Machine Learning e IA", base: "audio/episodio-08-ml" }
   ];
 
   const questions = [
@@ -882,6 +884,11 @@
       q: "5. (Estatística) Em qual distribuição discreta a média é numericamente igual à variância?",
       opts: ["Binomial", "Normal", "Poisson", "Uniforme"],
       ans: 2
+    },
+    {
+      q: "6. (Machine Learning) Qual técnica de regularização penaliza os coeficientes em módulo e é capaz de zerar pesos (seleção de variáveis)?",
+      opts: ["Ridge (L2)", "Lasso (L1)", "Dropout", "PCA"],
+      ans: 1
     }
   ];
 
@@ -913,6 +920,13 @@
     player.play().catch(() => {
       switchView("podcasts", "Podcasts");
     });
+  }
+
+  function formatDuration(sec) {
+    if (!isFinite(sec) || sec <= 0) return "";
+    const m = Math.floor(sec / 60);
+    const s = Math.floor(sec % 60).toString().padStart(2, "0");
+    return ` · ${m}:${s} min`;
   }
 
   function renderSubjects() {
@@ -957,7 +971,7 @@
         <div class="ep-header">
           <div>
             <h3>Episódio ${ep.number} — ${ep.title}</h3>
-            <p>${ep.meta}</p>
+            <p id="meta-${ep.id}">Lucas e Mariana</p>
           </div>
         </div>
         <audio controls preload="metadata" playsinline id="audio-${ep.id}">
@@ -971,6 +985,15 @@
         <div class="ep-status" id="status-${ep.id}">Pronto para reproduzir</div>
       </div>
     `).join("");
+
+    episodes.forEach(ep => {
+      const audioEl = $("audio-" + ep.id);
+      if (audioEl) {
+        audioEl.addEventListener("loadedmetadata", () => {
+          $("meta-" + ep.id).textContent = "Lucas e Mariana" + formatDuration(audioEl.duration);
+        });
+      }
+    });
 
     if ("caches" in window) {
       const cache = await caches.open("c03-audios-v1");
