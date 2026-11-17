@@ -13,15 +13,17 @@
   <link rel="icon" href="icon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="apple-touch-icon.png">
 
-  <title>SEFAZ-SP | C03 — Central de Estudos (Edital 01/2026)</title>
+  <title>SEFAZ-SP | C03 — Central de Estudos</title>
 
   <style>
     :root {
       --bg: #ffffff;
+      --surface: #f9fafb;
       --text: #111827;
       --muted: #6b7280;
       --border: #e5e7eb;
       --blue-bg: #eef2ff;
+      --blue-text: #3730a3;
       --green-bg: #ecfdf5;
       --purple-bg: #f5f3ff;
       --orange-bg: #fff7ed;
@@ -29,16 +31,19 @@
       --badge-green-bg: #dcfce7;
       --badge-green-text: #15803d;
       --navy: #1e325c;
+      --danger-bg: #fef2f2;
+      --danger-text: #b91c1c;
     }
 
     * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
 
     body {
       margin: 0;
-      padding: 0 0 110px;
+      padding: 0 0 115px;
       background: var(--bg);
       color: var(--text);
       font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Roboto, sans-serif;
+      line-height: 1.45;
     }
 
     .container {
@@ -53,25 +58,27 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 24px;
+      gap: 12px;
+      margin-bottom: 26px;
     }
 
     .brand-group {
       display: flex;
       align-items: center;
-      gap: 14px;
+      gap: 13px;
     }
 
     .app-icon {
       width: 48px;
       height: 48px;
       background: var(--navy);
-      border-radius: 13px;
+      border-radius: 14px;
       display: flex;
       align-items: center;
       justify-content: center;
       color: #ffffff;
       flex-shrink: 0;
+      box-shadow: 0 4px 12px rgba(30, 50, 92, 0.16);
     }
 
     .brand-text h1 {
@@ -97,12 +104,26 @@
       white-space: nowrap;
     }
 
-    /* Section Title */
     .section-heading {
       font-size: 17px;
       font-weight: 700;
-      margin: 0 0 14px;
+      margin: 0 0 16px;
       color: var(--text);
+    }
+
+    /* Views */
+    .view-section {
+      display: none;
+      animation: fadeIn 0.18s ease;
+    }
+
+    .view-section.active {
+      display: block;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(4px); }
+      to { opacity: 1; transform: translateY(0); }
     }
 
     /* 2x2 Grid Cards */
@@ -110,19 +131,19 @@
       display: grid;
       grid-template-columns: repeat(2, 1fr);
       gap: 14px;
-      margin-bottom: 18px;
+      margin-bottom: 20px;
     }
 
     .env-card {
       border-radius: 16px;
       padding: 18px;
       cursor: pointer;
-      transition: transform 0.15s ease;
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      min-height: 112px;
-      border: 1px solid rgba(0,0,0,0.03);
+      min-height: 116px;
+      border: 1px solid rgba(0, 0, 0, 0.04);
     }
 
     .env-card:active {
@@ -150,34 +171,38 @@
     }
 
     .env-card span {
-      font-size: 13px;
+      font-size: 12.5px;
       color: var(--muted);
     }
 
-    /* Featured Episode Pill */
+    /* Featured Podcast Bar */
     .featured-bar {
       background: var(--green-bg);
+      border: 1px solid #bbf7d0;
       border-radius: 16px;
-      padding: 14px 18px;
+      padding: 14px 16px;
       display: flex;
-      align-items: center;
       justify-content: space-between;
+      align-items: center;
       gap: 12px;
       cursor: pointer;
-      margin-bottom: 24px;
-      border: 1px solid rgba(22, 163, 74, 0.12);
+      transition: transform 0.15s ease;
+    }
+
+    .featured-bar:active {
+      transform: scale(0.99);
     }
 
     .featured-left {
       display: flex;
       align-items: center;
-      gap: 14px;
+      gap: 12px;
       min-width: 0;
     }
 
     .play-circle-solid {
-      width: 34px;
-      height: 34px;
+      width: 38px;
+      height: 38px;
       border-radius: 50%;
       background: var(--accent-green);
       color: #ffffff;
@@ -193,7 +218,7 @@
 
     .featured-info strong {
       display: block;
-      font-size: 15px;
+      font-size: 13.5px;
       font-weight: 700;
       color: var(--text);
       white-space: nowrap;
@@ -202,40 +227,27 @@
     }
 
     .featured-info span {
-      font-size: 13px;
+      display: block;
+      font-size: 12px;
       color: var(--muted);
     }
 
     .play-circle-outline {
-      width: 30px;
-      height: 30px;
+      width: 32px;
+      height: 32px;
       border-radius: 50%;
-      border: 1.5px solid #374151;
-      color: #374151;
+      border: 1.5px solid var(--accent-green);
+      color: var(--accent-green);
       display: flex;
       align-items: center;
       justify-content: center;
       flex-shrink: 0;
     }
 
-    /* Views (Tabs) */
-    .view-section {
-      display: none;
-      animation: fadeIn 0.2s ease;
-    }
-
-    .view-section.active {
-      display: block;
-    }
-
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(4px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
+    /* Back button */
     .back-btn {
-      background: #f3f4f6;
-      border: none;
+      background: var(--surface);
+      border: 1px solid var(--border);
       color: var(--text);
       font-size: 13px;
       font-weight: 600;
@@ -248,170 +260,203 @@
       gap: 6px;
     }
 
-    .search-input {
+    /* Search box */
+    .search-box {
       width: 100%;
-      padding: 11px 14px;
+      padding: 12px 14px;
       border: 1px solid var(--border);
       border-radius: 12px;
       font-size: 14px;
-      margin-bottom: 14px;
-      background: #f9fafb;
+      background: var(--surface);
       color: var(--text);
+      margin-bottom: 16px;
       outline: none;
     }
 
-    .search-input:focus {
+    .search-box:focus {
       border-color: var(--navy);
       background: #ffffff;
     }
 
-    /* List Items inside Views */
+    /* Cards & Items */
     .item-card {
       background: #ffffff;
       border: 1px solid var(--border);
-      border-radius: 14px;
+      border-radius: 15px;
       padding: 16px;
-      margin-bottom: 12px;
+      margin-bottom: 14px;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
     }
 
-    .subject-row {
+    .item-card-header {
       display: flex;
       justify-content: space-between;
-      align-items: center;
-      gap: 12px;
+      align-items: flex-start;
+      gap: 10px;
+      margin-bottom: 10px;
     }
 
-    .subject-row strong {
-      display: block;
-      font-size: 15px;
-      margin-bottom: 3px;
+    .tag-num {
+      display: inline-block;
+      background: var(--blue-bg);
+      color: var(--blue-text);
+      font-size: 11px;
+      font-weight: 700;
+      padding: 3px 8px;
+      border-radius: 6px;
+      margin-bottom: 5px;
     }
 
-    .subject-row small {
-      color: var(--muted);
-      font-size: 12px;
-      display: block;
-      line-height: 1.4;
-    }
-
-    .subject-actions {
-      display: flex;
-      gap: 6px;
-      flex-shrink: 0;
-    }
-
-    .btn-action {
-      border: none;
-      border-radius: 10px;
-      padding: 9px 12px;
-      font-size: 12px;
-      font-weight: 600;
-      cursor: pointer;
-      background: #f3f4f6;
+    .item-card h3 {
+      margin: 0;
+      font-size: 15.5px;
+      font-weight: 700;
       color: var(--text);
     }
 
-    .btn-action.done {
-      background: var(--badge-green-bg);
-      color: var(--badge-green-text);
+    .topic-list {
+      margin: 10px 0 14px;
+      padding-left: 18px;
+      color: #374151;
+      font-size: 13.5px;
+    }
+
+    .topic-list li {
+      margin-bottom: 6px;
+    }
+
+    .topic-list strong {
+      color: var(--text);
+    }
+
+    .btn {
+      border: 1px solid var(--border);
+      background: var(--surface);
+      color: var(--text);
+      font-size: 12.5px;
+      font-weight: 600;
+      padding: 9px 14px;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: all 0.15s ease;
     }
 
     .btn-primary {
       background: var(--navy);
       color: #ffffff;
+      border-color: var(--navy);
     }
 
-    /* Study Content Reader */
-    .lesson-body {
-      font-size: 14px;
-      line-height: 1.65;
-      color: #1f2937;
+    .btn-done {
+      background: var(--badge-green-bg);
+      color: var(--badge-green-text);
+      border-color: #86efac;
     }
 
-    .lesson-body h2 {
-      font-size: 18px;
-      color: var(--navy);
-      margin: 0 0 12px;
+    .btn-green {
+      background: var(--accent-green);
+      color: #ffffff;
+      border-color: var(--accent-green);
     }
 
-    .lesson-body h3 {
-      font-size: 15px;
-      color: var(--navy);
-      margin: 18px 0 8px;
-      border-bottom: 1px solid #f3f4f6;
-      padding-bottom: 4px;
-    }
-
-    .lesson-body ul {
-      padding-left: 18px;
-      margin: 8px 0 14px;
-    }
-
-    .lesson-body li {
-      margin-bottom: 6px;
-    }
-
-    .lesson-body code {
-      background: #f3f4f6;
-      padding: 2px 6px;
-      border-radius: 5px;
+    /* Podcast Audio */
+    .ep-meta {
       font-size: 12.5px;
-      color: #111827;
-    }
-
-    .flash-box {
-      background: #f0fdf4;
-      border-left: 4px solid var(--accent-green);
-      padding: 12px 14px;
-      border-radius: 8px;
-      margin-top: 16px;
-      font-size: 13px;
-    }
-
-    /* Episodes */
-    .ep-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-      margin-bottom: 10px;
-    }
-
-    .ep-header h3 {
-      margin: 0 0 4px;
-      font-size: 15px;
-    }
-
-    .ep-header p {
-      margin: 0;
-      font-size: 12px;
       color: var(--muted);
+      margin: 4px 0 10px;
     }
 
     audio {
       width: 100%;
       height: 40px;
-      margin: 8px 0;
+      margin: 6px 0 10px;
+      border-radius: 8px;
     }
 
     .ep-actions {
       display: flex;
       gap: 8px;
-      margin-top: 6px;
       flex-wrap: wrap;
     }
 
     .ep-status {
-      font-size: 11px;
-      color: var(--badge-green-text);
+      font-size: 12px;
+      color: var(--accent-green);
       margin-top: 8px;
       font-weight: 500;
     }
 
-    .ep-status.error {
-      color: #dc2626;
+    /* Helper box */
+    .info-box {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 13px 15px;
+      font-size: 12.5px;
+      color: var(--muted);
+      margin-bottom: 16px;
     }
 
-    /* Progress Card */
+    .info-box summary {
+      font-weight: 600;
+      color: var(--text);
+      cursor: pointer;
+    }
+
+    .file-list {
+      margin: 8px 0 0;
+      padding-left: 18px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      font-size: 11.5px;
+      color: #374151;
+    }
+
+    /* Quiz */
+    .quiz-q {
+      font-size: 14px;
+      font-weight: 600;
+      margin: 8px 0 12px;
+      color: var(--text);
+    }
+
+    .quiz-opt {
+      display: block;
+      width: 100%;
+      text-align: left;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 11px 13px;
+      margin-bottom: 8px;
+      font-size: 13px;
+      color: var(--text);
+      cursor: pointer;
+    }
+
+    .quiz-opt.correct {
+      background: var(--badge-green-bg);
+      border-color: var(--accent-green);
+      color: #065f46;
+      font-weight: 600;
+    }
+
+    .quiz-opt.wrong {
+      background: var(--danger-bg);
+      border-color: #f87171;
+      color: var(--danger-text);
+    }
+
+    .quiz-exp {
+      margin-top: 10px;
+      padding: 11px 13px;
+      border-radius: 10px;
+      background: var(--blue-bg);
+      color: #1e1b4b;
+      font-size: 12.5px;
+      display: none;
+    }
+
+    /* Progress Stats */
     .stats-row {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
@@ -420,15 +465,16 @@
     }
 
     .stat-box {
-      background: #f9fafb;
+      background: var(--surface);
       border: 1px solid var(--border);
       border-radius: 14px;
-      padding: 16px;
+      padding: 15px;
     }
 
     .stat-box strong {
       display: block;
-      font-size: 24px;
+      font-size: 22px;
+      font-weight: 800;
       color: var(--navy);
       margin-bottom: 2px;
     }
@@ -443,7 +489,7 @@
       height: 10px;
       border-radius: 999px;
       overflow: hidden;
-      margin: 10px 0 6px;
+      margin: 12px 0 8px;
     }
 
     .progress-fill {
@@ -453,72 +499,26 @@
       transition: width 0.3s ease;
     }
 
-    /* Quiz / Simulados */
-    .quiz-option {
-      display: block;
-      width: 100%;
-      text-align: left;
-      background: #f9fafb;
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      padding: 12px;
-      margin-top: 8px;
-      font-size: 13px;
-      cursor: pointer;
-    }
-
-    .quiz-option.correct {
-      background: var(--badge-green-bg);
-      border-color: var(--accent-green);
-      color: var(--badge-green-text);
-      font-weight: 600;
-    }
-
-    .quiz-option.wrong {
-      background: #fee2e2;
-      border-color: #ef4444;
-      color: #b91c1c;
-    }
-
-    .quiz-exp {
-      display: none;
-      margin-top: 10px;
-      padding: 10px 12px;
-      background: #f8fafc;
-      border-radius: 8px;
-      font-size: 12px;
-      color: #334155;
-      border-left: 3px solid var(--navy);
-    }
-
-    /* Persistent Mini Player */
-    .mini-player {
-      position: fixed;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      background: rgba(255, 255, 255, 0.96);
-      backdrop-filter: blur(12px);
-      border-top: 1px solid var(--border);
-      padding: 10px 18px max(12px, env(safe-area-inset-bottom));
-      display: none;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
-      z-index: 50;
-    }
-
-    .mini-player.visible {
+    .checklist-row {
       display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 0;
+      border-bottom: 1px solid var(--border);
+      font-size: 13.5px;
+      gap: 10px;
+    }
+
+    .checklist-row:last-child {
+      border-bottom: none;
     }
   </style>
 </head>
 <body>
 
 <div class="container">
-  <!-- Top Header -->
   <header>
-    <div class="brand-group">
+    <div class="brand-group" onclick="switchView('home', 'Tela inicial')" style="cursor:pointer;">
       <div class="app-icon" aria-hidden="true">
         <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <path d="M22 10v6M2 10l10-5 10 5-10 5z"/>
@@ -527,10 +527,10 @@
       </div>
       <div class="brand-text">
         <h1>SEFAZ-SP | C03</h1>
-        <p>Edital 01/2026 · Banca FCC</p>
+        <p>Central de Estudos • APOFP</p>
       </div>
     </div>
-    <span class="pill-badge" id="navBadge">Tela inicial</span>
+    <span class="pill-badge" id="headerBadge">Tela inicial</span>
   </header>
 
   <!-- HOME VIEW -->
@@ -540,8 +540,8 @@
     <div class="env-grid">
       <div class="env-card blue" onclick="switchView('conteudo', 'Conteúdo')">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/>
-          <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/>
+          <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/>
+          <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>
         </svg>
         <div>
           <strong>Conteúdo</strong>
@@ -556,15 +556,14 @@
         </svg>
         <div>
           <strong>Podcasts</strong>
-          <span>Aulas em áudio</span>
+          <span>10 episódios com Lucas e Mariana</span>
         </div>
       </div>
 
       <div class="env-card purple" onclick="switchView('simulados', 'Simulados')">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <rect x="8" y="2" width="8" height="4" rx="1" ry="1"/>
-          <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/>
-          <path d="m9 14 2 2 4-4"/>
+          <polyline points="9 11 12 14 22 4"/>
+          <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/>
         </svg>
         <div>
           <strong>Simulados</strong>
@@ -580,585 +579,526 @@
         </svg>
         <div>
           <strong>Progresso</strong>
-          <span>Metas e desempenho</span>
+          <span>Alvo 185+ pts • Top 5</span>
         </div>
       </div>
     </div>
 
     <!-- Featured Podcast Bar -->
-    <div class="featured-bar" onclick="playFeatured()">
+    <div class="featured-bar" onclick="toggleFeatured()">
       <div class="featured-left">
-        <div class="play-circle-solid">
+        <div class="play-circle-solid" id="featuredMainIcon">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
             <polygon points="6 3 20 12 6 21 6 3"/>
           </svg>
         </div>
         <div class="featured-info">
-          <strong>Episódio 01 — DAX Avançado</strong>
-          <span>Lucas e Mariana · Episódio completo</span>
+          <strong id="featuredTitle">Episódio 01 — Adm. Geral, Pública e Auditoria</strong>
+          <span id="featuredMeta">Lucas e Mariana · Episódio completo</span>
         </div>
       </div>
-      <div class="play-circle-outline">
-        <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
-          <polygon points="7 4 19 12 7 20 7 4"/>
+      <div class="play-circle-outline" onclick="event.stopPropagation(); switchView('podcasts', 'Podcasts');" title="Ver todos os 10 episódios">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="8" y1="6" x2="21" y2="6"/>
+          <line x1="8" y1="12" x2="21" y2="12"/>
+          <line x1="8" y1="18" x2="21" y2="18"/>
+          <line x1="3" y1="6" x2="3.01" y2="6"/>
+          <line x1="3" y1="12" x2="3.01" y2="12"/>
+          <line x1="3" y1="18" x2="3.01" y2="18"/>
         </svg>
       </div>
     </div>
+    <audio id="featuredAudio" preload="none"></audio>
   </section>
 
-  <!-- CONTEÚDO VIEW (LISTA COMPLETA ANEXO II) -->
+  <!-- CONTEÚDO VIEW -->
   <section id="view-conteudo" class="view-section">
     <button class="back-btn" onclick="switchView('home', 'Tela inicial')">← Voltar à Tela inicial</button>
-    <h2 class="section-heading">📖 Conteúdo Programático (Anexo II)</h2>
-    <input type="search" class="search-input" id="subjectSearch" placeholder="Filtrar matéria ou lei (ex.: EC 132, PCASP, CRISP-DM, Crase)..." oninput="renderSubjects()">
+    <h2 class="section-heading">📖 Conteúdo Programático — Edital 01/2026</h2>
+    <input type="search" id="searchInput" class="search-box" placeholder="Buscar disciplina ou tópico (ex: LRF, EC 132, PCASP, CRISP-DM)..." oninput="renderSubjects()">
     <div id="subjectsList"></div>
-  </section>
-
-  <!-- LEITOR DE AULA ESCRITA VIEW -->
-  <section id="view-leitor" class="view-section">
-    <button class="back-btn" onclick="switchView('conteudo', 'Conteúdo')">← Voltar para Disciplinas</button>
-    <div class="item-card lesson-body" id="lessonReaderContent"></div>
   </section>
 
   <!-- PODCASTS VIEW -->
   <section id="view-podcasts" class="view-section">
     <button class="back-btn" onclick="switchView('home', 'Tela inicial')">← Voltar à Tela inicial</button>
-    <h2 class="section-heading">🎧 Podcasts — Lucas e Mariana</h2>
+    <h2 class="section-heading">🎧 Podcasts — Lucas e Mariana (10 Disciplinas)</h2>
+
+    <details class="info-box">
+      <summary>📂 Nomes exatos dos 10 arquivos na pasta audio/ (.m4a ou .mp3)</summary>
+      <ul class="file-list">
+        <li>audio/episodio-01-administracao.m4a (ou .mp3)</li>
+        <li>audio/episodio-02-direito-administrativo.m4a (ou .mp3)</li>
+        <li>audio/episodio-03-direito-constitucional.m4a (ou .mp3)</li>
+        <li>audio/episodio-04-economia.m4a (ou .mp3)</li>
+        <li>audio/episodio-05-portugues.m4a (ou .mp3)</li>
+        <li>audio/episodio-06-matfin-estatistica.m4a (ou .mp3)</li>
+        <li>audio/episodio-07-afo.m4a (ou .mp3)</li>
+        <li>audio/episodio-08-contabilidade.m4a (ou .mp3)</li>
+        <li>audio/episodio-09-direito-financeiro.m4a (ou .mp3)</li>
+        <li>audio/episodio-10-fluencia-dados.m4a (ou .mp3)</li>
+      </ul>
+    </details>
+
     <div id="episodesList"></div>
   </section>
 
   <!-- SIMULADOS VIEW -->
   <section id="view-simulados" class="view-section">
     <button class="back-btn" onclick="switchView('home', 'Tela inicial')">← Voltar à Tela inicial</button>
-    <h2 class="section-heading">✅ Simulado Completo — Edital 01/2026</h2>
+    <div style="display:flex; justify-content:space-between; align-items:center; gap:10px; margin-bottom:14px;">
+      <h2 class="section-heading" style="margin:0;">✅ Simulado Estilo FCC (20 Questões)</h2>
+      <span class="pill-badge" id="quizScoreBadge">0 / 20 acertos</span>
+    </div>
     <div id="quizContainer"></div>
+    <button class="btn btn-primary" style="width:100%; margin-top:6px;" onclick="resetQuiz()">Reiniciar Simulado</button>
   </section>
 
   <!-- PROGRESSO VIEW -->
   <section id="view-progresso" class="view-section">
     <button class="back-btn" onclick="switchView('home', 'Tela inicial')">← Voltar à Tela inicial</button>
-    <h2 class="section-heading">📊 Metas e Desempenho</h2>
+    <h2 class="section-heading">📊 Metas e Desempenho — APOFP C03</h2>
+
     <div class="stats-row">
       <div class="stat-box">
-        <strong>185+</strong>
-        <span>Meta de pontos</span>
+        <strong>≥ 185</strong>
+        <span>Meta de pontos na objetiva</span>
       </div>
       <div class="stat-box">
         <strong>TOP 5</strong>
-        <span>Objetivo APOFP C03</span>
+        <span>Alvo estratégico SEFAZ-SP</span>
       </div>
     </div>
+
     <div class="item-card">
-      <strong>Progresso nas 10 disciplinas do Anexo II</strong>
+      <strong>Progresso nas 10 disciplinas (Conhecimentos Básicos)</strong>
       <div class="progress-track">
         <div class="progress-fill" id="progressBar"></div>
       </div>
-      <small id="progressText" style="color:var(--muted); font-size:12px;">0% concluído</small>
+      <small id="progressText" style="color:var(--muted); font-size:12.5px;">0% concluído (0/10 disciplinas)</small>
+
+      <div id="progressChecklist" style="margin-top:14px;"></div>
     </div>
   </section>
 </div>
 
-<!-- Persistent Bottom Audio Bar -->
-<div class="mini-player" id="miniPlayer">
-  <div style="min-width:0; flex:1;">
-    <strong id="miniTitle" style="display:block; font-size:13px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">Episódio 01 — DAX Avançado</strong>
-    <audio id="globalAudio" controls playsinline style="height:34px; margin:4px 0 0;"></audio>
-  </div>
-</div>
-
 <script>
-  const subjects = [
+  const subjectsData = [
     {
-      name: "01. Administração Geral, Pública e Auditoria Governamental",
-      desc: "PODC, SWOT/Porter/OKR, BPM, Scrum/Kanban, LAI, MROSC, 5 Es, COSO I/ERM, ISO 31000, 3 Linhas IIA e IA-CM",
-      content: `
-        <h2>Administração Geral, Pública e Auditoria Governamental</h2>
-        <h3>1. Evolução Administrativa, PODC e Estruturas</h3>
-        <ul>
-          <li><strong>Teorias:</strong> Clássica (tarefas/estrutura), Humanística (relações humanas), Neoclássica (resultados/APO), Estruturalista (homem organizacional), Comportamental (decisão/racionalidade limitada) e Sistêmica/Contingencial (ambiente e tecnologia; não há modelo único ideal).</li>
-          <li><strong>Funções (PODC):</strong> Planejamento, Organização, Direção e Controle.</li>
-          <li><strong>Estruturas:</strong> Linear (unidade de comando), Funcional (especialização), Linha-Staff (assessoria), Matricial (dupla subordinação: funcional + projetos), Por Projetos e Em Rede.</li>
-          <li><strong>Descentralização vs. Desconcentração:</strong> Descentralização cria/transfere competência para outra pessoa jurídica (outorga ou delegação); Desconcentração distribui internamente em órgãos da mesma pessoa jurídica (há hierarquia).</li>
-        </ul>
-        <h3>2. Planejamento Estratégico, Processos (BPM) e Projetos</h3>
-        <ul>
-          <li><strong>Diagnóstico:</strong> Análise SWOT (Forças/Fraquezas = interno; Oportunidades/Ameaças = externo), 5 Forças de Porter, Cadeia de Valor e OKR (Objetivos e Resultados-Chave).</li>
-          <li><strong>Gestão por Processos (BPM):</strong> Mapeamento (AS-IS), análise, redesenho (TO-BE) e melhoria contínua.</li>
-          <li><strong>Gestão de Projetos:</strong> PMBOK (ciclo preditivo), <strong>Scrum</strong> (PO, Scrum Master, Developers; Planning 8h, Daily 15m, Review 4h, Retro 3h) e <strong>Kanban</strong> (fluxo contínuo, gestão visual e limite de WIP).</li>
-        </ul>
-        <h3>3. Modelos de Gestão Pública, Transparência e Parcerias</h3>
-        <ul>
-          <li><strong>Modelos:</strong> Patrimonialista (confusão público/privado) &rarr; Burocrático (impessoalidade, formalismo, controle de meios) &rarr; Gerencial / <em>New Public Management</em> (foco em resultados, cidadão-cliente e eficiência).</li>
-          <li><strong>Transparência e Dados:</strong> LAI (Lei nº 12.527/2011 e Decreto SP nº 68.155/2023 — transparência ativa como regra, sigilo como exceção) e LGPD (Lei nº 13.709/2018).</li>
-          <li><strong>Terceiro Setor:</strong> OS (Contrato de Gestão), OSCIP (Termo de Parceria), MROSC (Lei nº 13.019/2014 — Termo de Colaboração, Termo de Fomento e Acordo de Cooperação) e Consórcios Públicos (Lei nº 11.107/2005).</li>
-          <li><strong>Indicadores ("5 Es") e Avaliação:</strong> Eficiência (meios/custos), Eficácia (alcance de metas), Efetividade (impacto social), Economicidade (menor custo com qualidade) e Execução. Avaliação: Custo-Benefício (monetiza resultados) vs. Custo-Efetividade (compara custos por unidade de resultado não monetário).</li>
-        </ul>
-        <h3>4. Auditoria Governamental, Riscos e Controle Interno</h3>
-        <ul>
-          <li><strong>Tipologias:</strong> Conformidade (legalidade), Financeira (demonstrações contábeis) e Operacional (desempenho: economicidade, eficiência, eficácia e efetividade).</li>
-          <li><strong>Instrumentos de Fiscalização:</strong> Auditoria, levantamento, monitoramento, acompanhamento e inspeção.</li>
-          <li><strong>Gestão de Riscos:</strong> COSO I (5 componentes de controle interno), COSO ERM (riscos integrados à estratégia) e ABNT NBR ISO 31000.</li>
-          <li><strong>Modelo das Três Linhas (IIA):</strong> 1ª Linha (gestão operacional/donos dos riscos), 2ª Linha (gestão de riscos e conformidade) e 3ª Linha (auditoria interna independente).</li>
-          <li><strong>Normas e Controle SP:</strong> IPPF/IIA, NBC TA/NBASP, IA-CM (modelo de capacidade de auditoria interna no setor público), Arts. 70 e 74 CF/88, CGE/SP, OGE/SP, ESG e Lei Anticorrupção (Lei nº 12.846/2013 — responsabilidade objetiva civil/administrativa de PJ).</li>
-        </ul>
-        <div class="flash-box">
-          <strong>Foco FCC:</strong> Diferencie 1ª, 2ª e 3ª Linhas do IIA; a Lei 12.846/2013 prevê responsabilidade <em>objetiva</em> da pessoa jurídica; na SWOT, forças/fraquezas são internas e oportunidades/ameaças são externas.
-        </div>
-      `
+      num: "01",
+      title: "Administração Geral, Pública e Auditoria Governamental",
+      ep: "Episódio 01",
+      topics: [
+        "<strong>Administração Geral:</strong> Funções administrativas (PODC) e estruturas organizacionais (Linear, Funcional, Linha-Staff e Matricial).",
+        "<strong>Gestão Estratégica e Processos:</strong> Matriz SWOT, 5 Forças de Porter, Cadeia de Valor, OKR, BPM (As-Is / To-Be), PMBOK, Kanban e Scrum (Transparência, Inspeção, Adaptação; PO, SM, Developers; eventos e artefatos).",
+        "<strong>Administração Pública e Transparência:</strong> Modelos Patrimonialista, Burocrático e Gerencial; LAI (Lei 12.527/2011 e Decreto SP 68.155/2023 — sigilos 25, 15 e 5 anos); LGPD; Terceiro Setor (OS, OSCIP e MROSC — Lei 13.019/2014).",
+        "<strong>Auditoria e Controle:</strong> Indicadores 5 Es (Economicidade, Eficiência, Eficácia, Efetividade e Equidade), COSO I e ERM, ISO 31000, Modelo das Três Linhas (IIA), NBASP, IA-CM, CGE/OGE e Lei Anticorrupção (Lei 12.846/2013)."
+      ]
     },
     {
-      name: "02. Direito Administrativo",
-      desc: "Princípios, Atos, Poderes, Lei 14.133/21, Improbidade (14.230/21), Lei SP 10.261/68 e Decretos SP",
-      content: `
-        <h2>Direito Administrativo</h2>
-        <h3>1. Organização Administrativa e Princípios (LIMPE)</h3>
-        <ul>
-          <li><strong>Administração Indireta:</strong> Autarquias (direito público, criadas por lei), Fundações Públicas (direito público ou privado), Empresas Públicas (100% capital público, qualquer forma societária) e Sociedades de Economia Mista (controle acionário público, apenas S.A.).</li>
-          <li><strong>Princípios Expressos (Art. 37 CF):</strong> Legalidade, Impessoalidade, Moralidade, Publicidade e Eficiência.</li>
-        </ul>
-        <h3>2. Atos Administrativos e Poderes</h3>
-        <ul>
-          <li><strong>Requisitos de Validade (CO-FI-FO-MO-OB):</strong> Competência, Finalidade, Forma (sempre vinculados), Motivo e Objeto (podem ser discricionários).</li>
-          <li><strong>Atributos (PATI):</strong> Presunção de legitimidade/veracidade, Autoexecutoriedade, Tipicidade e Imperatividade.</li>
-          <li><strong>Extinção:</strong> <em>Anulação</em> (ilegalidade — efeitos <em>ex tunc</em>, pela Administração ou Judiciário) vs. <em>Revogação</em> (conveniência e oportunidade — efeitos <em>ex nunc</em>, apenas pela Administração).</li>
-          <li><strong>Poderes:</strong> Vinculado, Discricionário, Hierárquico, Disciplinar, Regulamentar e de Polícia (atributos: discricionariedade, autoexecutoriedade e coercibilidade — atenção: cobrança de multa não é autoexecutória).</li>
-        </ul>
-        <h3>3. Agentes Públicos e Legislação Paulista</h3>
-        <ul>
-          <li><strong>CF/88 (Arts. 37–41):</strong> Estabilidade após 3 anos de efetivo exercício + avaliação especial de desempenho. Acumulação remunerada: 2 cargos de professor; 1 professor + 1 técnico/científico; 2 privativos de profissionais de saúde (havendo compatibilidade de horários).</li>
-          <li><strong>Estatuto de SP (Lei nº 10.261/1968) e PAD (Decreto SP nº 69.122/2024):</strong> Penas disciplinares: repreensão, suspensão (até 90 dias), multa, demissão, demissão a bem do serviço público e cassação de aposentadoria/disponibilidade.</li>
-        </ul>
-        <h3>4. Licitações (Lei 14.133/2021), Improbidade e Transparência</h3>
-        <ul>
-          <li><strong>Nova Lei de Licitações (Lei nº 14.133/2021):</strong> Modalidades: Pregão, Concorrência, Concurso, Leilão e Diálogo Competitivo (extinguiu Tomada de Preços e Convite). Critérios de julgamento: menor preço, maior desconto, melhor técnica/conteúdo artístico, técnica e preço, maior lance e maior retorno econômico.</li>
-          <li><strong>Improbidade Administrativa (Lei nº 8.429/92 alterada pela Lei nº 14.230/2021):</strong> Exige <strong>DOLO específico</strong> em todas as modalidades (não existe mais improbidade culposa).</li>
-          <li><strong>Normas de Transparência e Dados SP:</strong> LAI (Lei 12.527/11 e Decreto SP 68.155/23), LGPD (Lei 13.709/18) e Política de Dados Abertos de SP (Decreto SP nº 68.769/2024).</li>
-        </ul>
-        <div class="flash-box">
-          <strong>Foco FCC:</strong> Improbidade exige DOLO (Lei 14.230/21); Lei 14.133/21 inclui o Diálogo Competitivo; Revogação é mérito (ex nunc) e Anulação é ilegalidade (ex tunc).
-        </div>
-      `
+      num: "02",
+      title: "Direito Administrativo",
+      ep: "Episódio 02",
+      topics: [
+        "<strong>Princípios e Organização:</strong> LIMPE (Legalidade, Impessoalidade, Moralidade, Publicidade, Eficiência); Administração Direta e Indireta (Autarquias, Fundações, EP e SEM).",
+        "<strong>Atos e Poderes:</strong> Atributos (PATI: Presunção de legitimidade, Autoexecutoriedade, Tipicidade, Imperatividade); Anulação (ilegalidade, ex tunc) vs. Revogação (mérito, ex nunc); Poderes Vinculado, Discricionário, Hierárquico, Disciplinar, Regulamentar e de Polícia.",
+        "<strong>Servidores e Normas de SP:</strong> Disposições constitucionais (Arts. 37–41 CF); Estatuto dos Funcionários Públicos Civis de SP (Lei 10.261/1968); PAD Estadual (Decreto SP 69.122/2024); Política de Dados Abertos de SP (Decreto SP 68.769/2024).",
+        "<strong>Licitações e Improbidade:</strong> Nova Lei de Licitações (Lei 14.133/2021 — 5 modalidades: Pregão, Concorrência, Concurso, Leilão e Diálogo Competitivo); Improbidade Administrativa (Lei 8.429/1992 alterada pela Lei 14.230/2021 — exigência de dolo específico)."
+      ]
     },
     {
-      name: "03. Direito Constitucional",
-      desc: "Direitos Fundamentais, Finanças (Arts. 163–169), Sistema Tributário, Reforma Tributária (EC 132/23) e CE/SP",
-      content: `
-        <h2>Direito Constitucional</h2>
-        <h3>1. Teoria da Constituição, Direitos Fundamentais e Remédios</h3>
-        <ul>
-          <li><strong>Eficácia das Normas (José Afonso da Silva):</strong> Plena (aplicação direta, imediata e integral), Contida (direta e imediata, mas passível de restrição legal) e Limitada (depende de regulamentação; possui eficácia mínima negativa/interpretativa).</li>
-          <li><strong>Remédios Constitucionais:</strong> Habeas Corpus (locomoção), Habeas Data (informações pessoais/retificação), Mandado de Segurança (direito líquido e certo não amparado por HC/HD), Mandado de Injunção (omissão normativa) e Ação Popular (cidadão — patrimônio público/moralidade/meio ambiente).</li>
-        </ul>
-        <h3>2. Organização dos Poderes e Fiscalização (Arts. 70–75)</h3>
-        <ul>
-          <li><strong>Controle Externo:</strong> Exercido pelo Poder Legislativo com o auxílio do Tribunal de Contas (TCU / TCE-SP), abrangendo fiscalização contábil, financeira, orçamentária, operacional e patrimonial (legalidade, legitimidade e economicidade).</li>
-        </ul>
-        <h3>3. Sistema Tributário Nacional e Reforma Tributária (EC 132/2023)</h3>
-        <ul>
-          <li><strong>Limitações ao Poder de Tributar:</strong> Legalidade, Isonomia, Irretroatividade, Anterioridade Anual (exercício seguinte) e Anterioridade Nonagesimal (90 dias), Vedação ao Confisco.</li>
-          <li><strong>Reforma Tributária (EC nº 132/2023):</strong> Cria o IVA Dual composto pela <strong>CBS</strong> (Contribuição sobre Bens e Serviços — federal, substitui PIS/Cofins) e pelo <strong>IBS</strong> (Imposto sobre Bens e Serviços — compartilhado entre Estados, DF e Municípios, substitui ICMS e ISS), além do <strong>Imposto Seletivo (IS)</strong> sobre bens prejudiciais à saúde ou ao meio ambiente.</li>
-          <li><strong>Princípios da Reforma:</strong> Simplicidade, transparência, justiça tributária, cooperação, defesa do meio ambiente, não cumulatividade plena e tributação no destino.</li>
-        </ul>
-        <h3>4. Finanças Públicas (Arts. 163–169) e Constituição de SP</h3>
-        <ul>
-          <li><strong>Leis Orçamentárias (Iniciativa privativa do Executivo):</strong> PPA, LDO e LOA.</li>
-          <li><strong>Princípio da Exclusividade (Art. 165, § 8º):</strong> A LOA não conterá dispositivo estranho à previsão da receita e fixação da despesa, ressalvadas a autorização para abertura de créditos suplementares e contratação de operações de crédito (inclusive ARO).</li>
-        </ul>
-        <div class="flash-box">
-          <strong>Foco FCC:</strong> A EC 132/2023 institui CBS (União) + IBS (Estados/Municípios) + Imposto Seletivo, adotando o princípio do destino e a não cumulatividade plena.
-        </div>
-      `
+      num: "03",
+      title: "Direito Constitucional",
+      ep: "Episódio 03",
+      topics: [
+        "<strong>Normas e Remédios:</strong> Eficácia das normas constitucionais (Plena, Contida e Limitada); Habeas Corpus, Habeas Data, Mandado de Segurança (120 dias), Mandado de Injunção e Ação Popular.",
+        "<strong>Fiscalização e Controle:</strong> Controle externo pelo Legislativo com auxílio do Tribunal de Contas (Arts. 70–75 CF; TCU e TCE-SP — parecer prévio nas contas do Chefe do Executivo vs. julgamento das contas dos administradores).",
+        "<strong>Sistema Tributário e Reforma (EC 132/2023):</strong> IVA Dual — CBS (União) e IBS (Estados, DF e Municípios, gerido pelo Comitê Gestor, princípio do destino e não cumulatividade plena) + Imposto Seletivo (extrafiscal).",
+        "<strong>Finanças Públicas e Constituição de SP:</strong> Normas gerais de finanças públicas (Arts. 163–169 CF), vedações orçamentárias e organização financeira/tributária do Estado de São Paulo."
+      ]
     },
     {
-      name: "04. Economia (Micro, Macro e Projetos)",
-      desc: "Elasticidades, Falhas de Mercado, Curva de Laffer, IS-LM, Mundell-Fleming, ETTJ, Duration e VaR",
-      content: `
-        <h2>Economia</h2>
-        <h3>1. Teoria Microeconômica</h3>
-        <ul>
-          <li><strong>Elasticidades:</strong> Preço-demanda (<code>|Ep| &gt; 1</code> elástica; <code>|Ep| &lt; 1</code> inelástica). Bens inferiores têm elasticidade-renda negativa; bens normais positiva; bens de luxo <code>&gt; 1</code>.</li>
-          <li><strong>Falhas de Mercado:</strong> Bens públicos (não rivais e não excludentes &rarr; problema do carona/<em>free-rider</em>), Externalidades (positivas ou negativas), Assimetria de Informação (seleção adversa <em>ex-ante</em> e risco moral <em>ex-post</em>) e Monopólio Natural (economias de escala contínuas, custo médio decrescente).</li>
-          <li><strong>Tributação:</strong> <em>Curva de Laffer</em> (relação em U invertido entre alíquota e arrecadação), <em>Incidência Tributária</em> (quem tem curva mais inelástica arca com maior parcela do imposto) e <em>Excesso de Gravame / Peso Morto</em> (perda de eficiência alocativa causada por tributos distorcivos).</li>
-        </ul>
-        <h3>2. Teoria Macroeconômica</h3>
-        <ul>
-          <li><strong>Contabilidade Nacional:</strong> <code>PIB = C + I + G + (X - M)</code>. <code>PNB = PIB - RLEE</code>.</li>
-          <li><strong>Modelo IS-LM e Mundell-Fleming:</strong> Política fiscal desloca a curva IS; política monetária desloca a curva LM. Em economia aberta com perfeita mobilidade de capitais: com <strong>câmbio flutuante</strong>, a política monetária é eficaz e a fiscal é ineficaz; com <strong>câmbio fixo</strong>, a política fiscal é eficaz e a monetária é ineficaz.</li>
-          <li><strong>Curva de Phillips:</strong> Trade-off de curto prazo entre inflação e desemprego; no longo prazo é vertical na taxa natural de desemprego (NAIRU).</li>
-        </ul>
-        <h3>3. Avaliação Econômica de Projetos e Risco</h3>
-        <ul>
-          <li><strong>Indicadores:</strong> TMA (Taxa Mínima de Atratividade), VPL (<code>&gt; 0</code> aceita), TIR (<code>&gt; TMA</code> aceita), Payback e Índice de Lucratividade.</li>
-          <li><strong>Renda Fixa e Risco de Mercado:</strong> <em>ETTJ</em> (Estrutura a Termo da Taxa de Juros — curva de juros por prazo), <em>Duration</em> (prazo médio ponderado dos fluxos de caixa; mede a sensibilidade do preço do título a variações na taxa de juros) e <em>VaR (Value at Risk)</em> (perda máxima esperada em determinado horizonte de tempo e nível de confiança).</li>
-        </ul>
-        <div class="flash-box">
-          <strong>Foco FCC:</strong> Na incidência tributária, o lado mais inelástico paga mais imposto; no Mundell-Fleming, câmbio flutuante potencializa política monetária e câmbio fixo potencializa política fiscal.
-        </div>
-      `
+      num: "04",
+      title: "Economia",
+      ep: "Episódio 04",
+      topics: [
+        "<strong>Microeconomia:</strong> Elasticidades-preço, cruzada e renda; falhas de mercado (externalidades, bens públicos — não rivalidade e não exclusão —, assimetria de informação e monopólios); Curva de Laffer, incidência tributária e peso morto (excesso de gravame).",
+        "<strong>Macroeconomia:</strong> Contabilidade Nacional (PIB, PNB, óticas do produto, renda e despesa); Modelos IS-LM e Mundell-Fleming (mobilidade de capitais e regimes cambiais); Curva de Phillips e metas de inflação.",
+        "<strong>Avaliação Econômica de Projetos:</strong> Taxa Mínima de Atratividade (TMA), Valor Presente Líquido (VPL), Taxa Interna de Retorno (TIR) e Payback descontado.",
+        "<strong>Risco e Estrutura a Termo:</strong> Estrutura a Termo da Taxa de Juros (ETTJ), Duration de Macaulay/Modificada (sensibilidade a juros) e Value at Risk (VaR)."
+      ]
     },
     {
-      name: "05. Língua Portuguesa",
-      desc: "Ortografia, Crase, Pontuação, Concordância, Regência, Vozes Verbais, Discursos e Conectivos",
-      content: `
-        <h2>Língua Portuguesa (Padrão FCC)</h2>
-        <h3>1. Crase, Ortografia e Acentuação</h3>
-        <ul>
-          <li><strong>Crase Obrigatória:</strong> Antes de locuções adverbiais, prepositivas e conjuntivas femininas (<em>à medida que, à noite, às vezes</em>) e na fusão de preposição <code>a</code> + artigo <code>a</code> ou pronome demonstrativo <code>aquele(s)/aquela(s)/aquilo</code>.</li>
-          <li><strong>Crase Proibida:</strong> Antes de verbo, palavra masculina, pronomes pessoais/indefinidos, artigo indefinido (<em>uma</em>) e expressão com palavras repetidas (<em>cara a cara</em>).</li>
-          <li><strong>Crase Facultativa:</strong> Antes de pronome possessivo feminino singular (<em>a/à sua casa</em>), nome próprio feminino e após a preposição <em>até</em>.</li>
-        </ul>
-        <h3>2. Concordância, Regência e Vozes Verbais</h3>
-        <ul>
-          <li><strong>Verbos Impessoais:</strong> <em>Haver</em> (sentido de existir/tempo decorrido) e <em>Fazer</em> (tempo/clima) ficam na <strong>3ª pessoa do singular</strong> (<em>Houve problemas</em>; <em>Faz dez anos</em>).</li>
-          <li><strong>Partícula SE:</strong> Com VTD + SE (Partícula Apassivadora), o verbo concorda com o sujeito paciente (<em>Alugam-se casas</em>). Com VTI/VI/VL + SE (Índice de Indeterminação do Sujeito), o verbo fica no singular (<em>Precisa-se de técnicos</em>).</li>
-          <li><strong>Transposição de Vozes:</strong> Voz Ativa (<em>O auditor analisou os dados</em>) &rarr; Voz Passiva Analítica (<em>Os dados foram analisados pelo auditor</em> — mantém o mesmo tempo e modo verbal).</li>
-        </ul>
-        <h3>3. Pontuação, Conectivos e Discursos</h3>
-        <ul>
-          <li><strong>Vírgula Proibida:</strong> Nunca separe com vírgula única o <strong>sujeito do verbo</strong> ou o <strong>verbo de seu complemento</strong>.</li>
-          <li><strong>Conectivos Chave:</strong> <em>Conquanto, embora, posto que</em> = <strong>Concessão</strong>; <em>Porquanto, visto que, uma vez que</em> = <strong>Causa/Explicação</strong>; <em>Contudo, entretanto, todavia</em> = <strong>Adversidade</strong>; <em>Portanto, logo, destarte</em> = <strong>Conclusão</strong>.</li>
-          <li><strong>Discursos:</strong> Direto (fala literal), Indireto (narrador relata com conjunção integrante) e Indireto Livre (fusão da voz do narrador com o pensamento da personagem sem verbo dicendi).</li>
-        </ul>
-        <div class="flash-box">
-          <strong>Foco FCC:</strong> Atenção a <em>posto que</em> (concessivo = embora) e <em>porquanto</em> (causal/explicativo = porque); na transposição para voz passiva, o verbo auxiliar <em>ser</em> assume exatamente o tempo do verbo principal da ativa.
-        </div>
-      `
+      num: "05",
+      title: "Língua Portuguesa",
+      ep: "Episódio 05",
+      topics: [
+        "<strong>Ortografia, Acentuação e Crase:</strong> Novo Acordo Ortográfico, uso do hífen, acentuação de oxítonas, paroxítonas, proparoxítonas e hiatos; crase obrigatória, proibida e facultativa.",
+        "<strong>Sintaxe, Concordância e Regência:</strong> Concordância verbal (sujeito composto, verbos impessoais haver/fazer, partícula 'se' apassivadora vs. índice de indeterminação) e nominal; regência verbal e emprego dos pronomes relativos.",
+        "<strong>Vozes Verbais e Pontuação:</strong> Transposição entre voz ativa, passiva analítica e passiva sintética; emprego da vírgula, ponto e vírgula e dois-pontos sem quebra da estrutura sintática.",
+        "<strong>Coesão, Conectivos e Discursos:</strong> Valores semânticos das conjunções (adversativas, concessivas, conclusivas, explicativas, causais); reescrita de frases (estilo FCC) e discursos direto, indireto e indireto livre."
+      ]
     },
     {
-      name: "06. Matemática Financeira e Estatística",
-      desc: "Taxas, Capitalização Contínua, Descontos, SAC/Price, VPL/TIR, Distribuições, Testes, Séries e ML",
-      content: `
-        <h2>Matemática Financeira e Estatística</h2>
-        <h3>1. Matemática Financeira</h3>
-        <ul>
-          <li><strong>Taxas:</strong> Simples = taxas proporcionais; Compostos = taxas equivalentes <code>(1 + i_anual) = (1 + i_mensal)<sup>12</sup></code>. Taxa Real (<code>i_r</code>): <code>(1 + i_aparente) = (1 + i_real) &times; (1 + inflação)</code> (Equação de Fisher). Capitalização Contínua: <code>M = C &times; e<sup>(i &times; t)</sup></code>.</li>
-          <li><strong>Descontos:</strong> Comercial ("por fora", sobre Valor Nominal N): <code>Dc = N &times; i &times; t</code>. Racional ("por dentro", sobre Valor Atual A): <code>Dr = A &times; i &times; t</code>. No regime simples: <code>Dc = Dr &times; (1 + i &times; t)</code>.</li>
-          <li><strong>Amortizações e Projetos:</strong> SAC (amortização constante, prestação decrescente); Price (prestação constante, amortização crescente); Sistema Misto (média aritmética entre SAC e Price). VPL (<code>&gt; 0</code> viável) e TIR (taxa que zera o VPL).</li>
-        </ul>
-        <h3>2. Estatística Descritiva e Probabilidades</h3>
-        <ul>
-          <li><strong>Assimetria e Curtose:</strong> Assimetria positiva (direita): <code>Média &gt; Mediana &gt; Moda</code>. Curtose: Leptocúrtica (pico alto/caudas pesadas), Mesocúrtica (Normal) e Platicúrtica (achatada).</li>
-          <li><strong>Distribuições Discretas:</strong> Bernoulli (1 ensaio), Binomial (<code>n</code> ensaios independentes), Geométrica (ensaios até 1º sucesso), Hipergeométrica (sem reposição), Multinomial e Poisson (eventos por tempo/espaço; <code>Média = Variância = &lambda;</code>).</li>
-          <li><strong>Distribuições Contínuas:</strong> Uniforme, Exponencial (sem memória), Normal (68% / 95% / 99,7%; TCL garante normalidade das médias amostrais), t de Student, Qui-quadrado (&chi;&sup2;), F de Snedecor, Beta e Gama.</li>
-        </ul>
-        <h3>3. Inferência, Regressão e Séries Temporais</h3>
-        <ul>
-          <li><strong>Amostragem Probabilística:</strong> Aleatória Simples, Estratificada (subgrupos homogêneos), Sistemática (intervalo <code>k</code>) e por Conglomerados (grupos heterogêneos).</li>
-          <li><strong>Testes de Hipóteses:</strong> Se <code>p-valor &le; &alpha;</code>, rejeita H0. Erro Tipo I (&alpha;) = rejeitar H0 verdadeira; Erro Tipo II (&beta;) = não rejeitar H0 falsa; Poder = <code>1 - &beta;</code>. ANOVA compara médias de 3 ou mais grupos.</li>
-          <li><strong>Regressão e Séries:</strong> Métricas de regressão: MAE, MSE, RMSE e R&sup2;. Séries temporais: tendência, sazonalidade, estacionariedade e modelos ARIMA (p, d, q).</li>
-        </ul>
-        <h3>4. Aprendizado de Máquina (Modelagem)</h3>
-        <ul>
-          <li><strong>Supervisionado:</strong> Regressão Linear, Regressão Logística, Árvores, Random Forest, k-NN e SVM.</li>
-          <li><strong>Não Supervisionado:</strong> K-Means, Agrupamento Hierárquico, PCA, ICA e Regras de Associação.</li>
-          <li><strong>Avaliação e Regularização:</strong> Overfitting (alta variância &rarr; Ridge L2 / Lasso L1); Underfitting (alto viés). Classificação: Precisão <code>VP/(VP+FP)</code>, Recall/Sensibilidade <code>VP/(VP+FN)</code>, Especificidade <code>VN/(VN+FP)</code>, F1-Score e AUC-ROC.</li>
-        </ul>
-        <div class="flash-box">
-          <strong>Foco FCC:</strong> Na Equação de Fisher, <em>nunca</em> subtraia diretamente a inflação da taxa nominal — divida <code>(1+i)/(1+inflação) - 1</code>; em séries temporais ARIMA, o parâmetro <em>d</em> indica o número de diferenciações para tornar a série estacionária.
-        </div>
-      `
+      num: "06",
+      title: "Matemática Financeira e Estatística",
+      ep: "Episódio 06",
+      topics: [
+        "<strong>Matemática Financeira:</strong> Juros simples e compostos, Equação de Fisher (taxa real, aparente e inflação), capitalização contínua (M = C · e^(i·t)), taxas nominal, efetiva e equivalente.",
+        "<strong>Descontos, Amortização e Fluxos:</strong> Desconto comercial ('por fora', incide sobre N) vs. racional ('por dentro', incide sobre A); Sistemas SAC (amortização constante, prestação em PA decrescente), Price (prestação constante, amortização em PG) e Misto; VPL e TIR.",
+        "<strong>Estatística Descritiva e Probabilidade:</strong> Média, mediana, moda, variância, desvio-padrão, coeficiente de variação, assimetria e curtose; distribuições Binomial, Poisson, Normal e Teorema Central do Limite (TCL).",
+        "<strong>Inferência, Séries e ML:</strong> Amostragem, intervalos de confiança, testes de hipóteses (Erro Tipo I α, Erro Tipo II β, p-valor e poder do teste), ANOVA, séries temporais (ARIMA) e aprendizado de máquina (viés-variância, Ridge/Lasso, métricas de classificação)."
+      ]
     },
     {
-      name: "07. Administração Financeira e Orçamentária (AFO)",
-      desc: "PPA/LDO/LOA, Princípios, Classificações, Créditos Adicionais, Estágios, Restos a Pagar e Suprimento de Fundos",
-      content: `
-        <h2>Administração Financeira e Orçamentária (AFO)</h2>
-        <h3>1. Instrumentos de Planejamento (PPA, LDO e LOA)</h3>
-        <ul>
-          <li><strong>PPA (4 anos):</strong> Diretrizes, objetivos e metas da administração para despesas de capital e programas de duração continuada (vigência do 2º ano do mandato ao 1º do próximo).</li>
-          <li><strong>LDO:</strong> Metas e prioridades, orienta a elaboração da LOA, dispõe sobre alterações na legislação tributária e estabelece a política das agências financeiras oficiais de fomento (inclui Anexos de Metas Fiscais e de Riscos Fiscais).</li>
-          <li><strong>LOA:</strong> Compreende Orçamento Fiscal, Orçamento da Seguridade Social e Orçamento de Investimento das Estatais.</li>
-        </ul>
-        <h3>2. Princípios Orçamentários e Tipos de Orçamento</h3>
-        <ul>
-          <li><strong>Princípios:</strong> Unidade/Totalidade, Universalidade, Anualidade, Exclusividade, Especificação/Discriminação, Não Afetação da Receita de Impostos (Art. 167, IV CF — ressalvas: saúde, educação, administração tributária, repartição constitucional e garantias de ARO), Orçamento Bruto e Legalidade.</li>
-          <li><strong>Evolução:</strong> Tradicional (foco no gasto/objeto) &rarr; Desempenho &rarr; Orçamento-Programa (foco em objetivos e metas) &rarr; Orçamento Base Zero (OBZ — reavalia todos os gastos do zero a cada ciclo).</li>
-        </ul>
-        <h3>3. Classificações e Créditos Adicionais (Lei 4.320/64)</h3>
-        <ul>
-          <li><strong>Natureza da Despesa (C-G-M-E-D):</strong> Categoria Econômica (3 Corrente / 4 Capital), Grupo de Natureza (GND 1 a 6), Modalidade de Aplicação, Elemento de Despesa e Desdobramento.</li>
-          <li><strong>Créditos Adicionais:</strong> <em>Suplementares</em> (reforço de dotação existente; exige lei e indicação de fonte), <em>Especiais</em> (despesa sem dotação específica; exige lei e fonte) e <em>Extraordinários</em> (imprevisíveis e urgentes: guerra, comoção interna ou calamidade pública; abertos por Medida Provisória/Decreto, independem de fonte prévia).</li>
-        </ul>
-        <h3>4. Execução Orçamentária e Financeira</h3>
-        <ul>
-          <li><strong>Estágios da Receita:</strong> Previsão &rarr; Lançamento &rarr; Arrecadação &rarr; Recolhimento (Conta Única).</li>
-          <li><strong>Estágios da Despesa:</strong> Empenho (ordinário, estimativo ou global) &rarr; Liquidação (verificação do direito adquirido) &rarr; Pagamento.</li>
-          <li><strong>Restos a Pagar:</strong> Despesas empenhadas e não pagas até 31/12 (<em>Processados</em> = já liquidadas; <em>Não Processados</em> = ainda não liquidadas).</li>
-          <li><strong>DEA vs. Suprimento de Fundos:</strong> DEA (Despesas de Exercícios Anteriores — dotação própria do orçamento vigente). Suprimento de Fundos (regime de adiantamento a servidor para despesas excepcionais que não possam subordinar-se ao processo normal).</li>
-        </ul>
-        <div class="flash-box">
-          <strong>Foco FCC:</strong> Créditos suplementares e especiais dependem de autorização legislativa e existência de recursos; créditos extraordinários são abertos por MP/Decreto e dispensam indicação prévia de fonte.
-        </div>
-      `
+      num: "07",
+      title: "Administração Financeira e Orçamentária (AFO)",
+      ep: "Episódio 07",
+      topics: [
+        "<strong>Ciclo e Instrumentos (CF Art. 165):</strong> PPA (4 anos — diretrizes, objetivos e metas), LDO (metas e prioridades, orienta a LOA, alterações tributárias) e LOA (Orçamento Fiscal, da Seguridade Social e de Investimento das Estatais).",
+        "<strong>Princípios e Classificações:</strong> Unidade, Universalidade, Anualidade, Exclusividade (exceções: créditos suplementares e operações de crédito/ARO), Não Afetação de Impostos; classificação institucional, funcional, programática e por natureza (GND 1 a 6).",
+        "<strong>Créditos Adicionais:</strong> Suplementares (reforçam dotação, podem ser autorizados na LOA), Especiais (nova dotação, lei específica) e Extraordinários (urgência/imprevisibilidade, sem exigir fonte prévia; especiais e extraordinários abertos nos últimos 4 meses podem ser reabertos).",
+        "<strong>Execução e Restos a Pagar:</strong> Estágios da Receita (PLAR: Previsão, Lançamento, Arrecadação, Recolhimento) e da Despesa (ELP: Empenho, Liquidação, Pagamento); Restos a Pagar Processados vs. Não Processados, DEA e Suprimento de Fundos."
+      ]
     },
     {
-      name: "08. Contabilidade Geral e Pública (CASP)",
-      desc: "PCASP, MCASP, Enfoques Orçamentário e Patrimonial, Variações Patrimoniais, DCASP e Partidas Dobradas",
-      content: `
-        <h2>Contabilidade Geral e Pública</h2>
-        <h3>1. Contabilidade Geral — Fundamentos</h3>
-        <ul>
-          <li><strong>Equação Fundamental:</strong> <code>Ativo = Passivo + Patrimônio Líquido</code>.</li>
-          <li><strong>Natureza das Contas (Partidas Dobradas):</strong> Ativo e Despesas têm natureza <strong>devedora</strong> (aumentam a débito); Passivo, PL e Receitas têm natureza <strong>credora</strong> (aumentam a crédito).</li>
-          <li><strong>Fatos Contábeis:</strong> <em>Permutativos</em> (não alteram o PL), <em>Modificativos</em> (alteram o PL — aumentativos ou diminutivos) e <em>Mistos</em> (permutam elementos e alteram o PL simultaneamente).</li>
-          <li><strong>Regimes:</strong> Competência (fato gerador, independente de recebimento/pagamento) vs. Caixa (entrada/saída financeira).</li>
-        </ul>
-        <h3>2. CASP — Regimes, Enfoques e Variações Patrimoniais</h3>
-        <ul>
-          <li><strong>Art. 35 da Lei 4.320/64 (Enfoque Orçamentário):</strong> Pertencem ao exercício as receitas nele <em>arrecadadas</em> (caixa) e as despesas nele <em>legalmente empenhadas</em> (competência orçamentária).</li>
-          <li><strong>Enfoque Patrimonial (NBC TSP / MCASP):</strong> Segue integralmente o <strong>regime de competência</strong> para Variações Patrimoniais Aumentativas (VPA) e Diminutivas (VPD).</li>
-        </ul>
-        <h3>3. Plano de Contas Aplicado ao Setor Público (PCASP)</h3>
-        <ul>
-          <li><strong>8 Classes e Natureza da Informação:</strong>
-            <br>• <em>Patrimonial:</em> 1 (Ativo), 2 (Passivo e PL), 3 (VPD), 4 (VPA).
-            <br>• <em>Orçamentária:</em> 5 (Planejamento/Aprovação), 6 (Execução Orçamentária).
-            <br>• <em>Controle:</em> 7 (Controles Devedores), 8 (Controles Credores).
-            <br><em>Regra de ouro:</em> Os lançamentos contábeis fecham débito e crédito <strong>dentro da mesma natureza de informação</strong>!
-          </li>
-        </ul>
-        <h3>4. Demonstrações Contábeis Aplicadas ao Setor Público (DCASP)</h3>
-        <ul>
-          <li><strong>Balanço Orçamentário:</strong> Confronta receitas e despesas previstas com as executadas (evidencia resultado orçamentário: superávit ou déficit).</li>
-          <li><strong>Balanço Financeiro:</strong> Receitas e despesas orçamentárias + recebimentos e pagamentos extraorçamentários + saldos em espécie (inicial e final).</li>
-          <li><strong>Balanço Patrimonial:</strong> Quadro principal (Ativo/Passivo Circulante e Não Circulante + PL) + Quadro de Ativos e Passivos Financeiros e Permanentes (apurando o <strong>Superávit Financeiro</strong> da Lei 4.320/64).</li>
-          <li><strong>DVP, DMPL, DFC e Notas Explicativas:</strong> DVP apura o resultado patrimonial (<code>VPA - VPD</code>); DFC divide fluxos em Operacionais, de Investimento e de Financiamento.</li>
-        </ul>
-        <div class="flash-box">
-          <strong>Foco FCC:</strong> No PCASP, classes ímpares (1, 3, 5, 7) são devedoras e classes pares (2, 4, 6, 8) são credoras; lançamentos nunca misturam naturezas diferentes (Patrimonial, Orçamentária e Controle).
-        </div>
-      `
+      num: "08",
+      title: "Contabilidade Geral e Pública (CASP)",
+      ep: "Episódio 08",
+      topics: [
+        "<strong>Contabilidade Geral:</strong> Equação patrimonial (Ativo = Passivo + PL), partidas dobradas, natureza das contas (Ativo e Despesa = devedoras; Passivo, PL e Receita = credoras) e fatos contábeis (permutativos, modificativos e mistos).",
+        "<strong>Enfoques Orçamentário vs. Patrimonial:</strong> Orçamentário (Lei 4.320/64, Art. 35 — caixa na receita, competência no empenho da despesa) vs. Patrimonial (NBC TSP/MCASP — regime de competência integral para VPA e VPD).",
+        "<strong>Estrutura do PCASP (8 Classes):</strong> Patrimonial (1 Ativo, 2 Passivo/PL, 3 VPD, 4 VPA), Orçamentária (5 Aprovação, 6 Execução) e Controle (7 Devedores, 8 Credores) — lançamentos fecham dentro de cada natureza.",
+        "<strong>MCASP e DCASP:</strong> Balanço Orçamentário, Balanço Financeiro, Balanço Patrimonial (ativo/passivo financeiro vs. permanente, superávit financeiro), Demonstração das Variações Patrimoniais (DVP) e DFC."
+      ]
     },
     {
-      name: "09. Direito Financeiro e Finanças Públicas",
-      desc: "LRF (LC 101/00), Lei 4.320/64, Dívida Pública, DOCC, Precatórios, Renúncia de Receita e Resultados Fiscais",
-      content: `
-        <h2>Direito Financeiro e Finanças Públicas</h2>
-        <h3>1. Receita Pública, Renúncia e Dívida Ativa</h3>
-        <ul>
-          <li><strong>Receitas Originárias vs. Derivadas:</strong> Originárias (exploração do patrimônio estatal, regime contratual/privado: aluguéis, dividendos, preços públicos) vs. Derivadas (poder de império/coercitivo: tributos e multas).</li>
-          <li><strong>Renúncia de Receita (Art. 14 LRF):</strong> Anistia, remissão, subsídio, crédito presumido, isenção não geral, alteração de alíquota/base de cálculo com benefício discriminado. Exige estimativa de impacto trienal + atendimento à LDO + <strong>não afetar metas fiscais</strong> OU medidas de compensação.</li>
-          <li><strong>Dívida Ativa:</strong> Tributária e Não Tributária; inscrita após apuração de liquidez e certeza, gozando de presunção relativa de certeza e liquidez.</li>
-        </ul>
-        <h3>2. Despesa Obrigatória de Caráter Continuado (DOCC) e Pessoal</h3>
-        <ul>
-          <li><strong>DOCC (Art. 17 LRF):</strong> Despesa corrente derivada de lei/ato normativo que fixe obrigação legal de execução por período superior a <strong>2 exercícios</strong>. Exige estimativa de impacto trienal + comprovação de origem dos recursos + compensação permanente (aumento de receita ou redução permanente de despesa).</li>
-          <li><strong>Limites de Pessoal (Art. 19–23 LRF):</strong> União 50% | Estados 60% (49% Exec, 6% Jud, 3% Leg/TCE, 2% MP) | Municípios 60%. Alerta: 90%; Prudencial: 95%; Máximo: 100% (eliminação em 2 quadrimestres, sendo 1/3 no 1º).</li>
-        </ul>
-        <h3>3. Dívida Pública, ARO, Regra de Ouro e Precatórios</h3>
-        <ul>
-          <li><strong>Dívida Fundada (Consolidada) vs. Flutuante:</strong> Fundada (compromissos <code>&gt; 12 meses</code> para atender desequilíbrio orçamentário ou financiar obras) vs. Flutuante (curto prazo: restos a pagar, serviços da dívida a pagar, depósitos e ARO).</li>
-          <li><strong>ARO:</strong> Contratação apenas a partir de 10/01, liquidação até 10/12 e vedada no último ano de mandato.</li>
-          <li><strong>Precatórios (Art. 100 CF):</strong> Apresentados até <strong>2 de abril</strong> são incluídos no orçamento do exercício seguinte; preferência para débitos alimentares de idosos (60+), pessoas com deficiência e portadores de doença grave.</li>
-        </ul>
-        <h3>4. Resultados Fiscais e NFSP</h3>
-        <ul>
-          <li><strong>Critérios Acima vs. Abaixo da Linha:</strong> Acima da linha (fluxo de receitas menos despesas — STN); Abaixo da linha (variação do endividamento líquido — BACEN / NFSP).</li>
-          <li><strong>Resultados:</strong> <em>Primário</em> (receitas não financeiras menos despesas não financeiras — exclui juros); <em>Operacional</em> (primário + juros reais); <em>Nominal</em> (primário + juros nominais + correção monetária/cambial).</li>
-        </ul>
-        <div class="flash-box">
-          <strong>Foco FCC:</strong> O Resultado Primário exclui receitas e despesas financeiras (juros); a DOCC abrange obrigações superiores a 2 exercícios e exige compensação permanente.
-        </div>
-      `
+      num: "09",
+      title: "Direito Financeiro e Finanças Públicas",
+      ep: "Episódio 09",
+      topics: [
+        "<strong>Receitas e Renúncia (LRF Art. 14):</strong> Receitas originárias (patrimoniais/empresariais) vs. derivadas (tributos/penalidades); renúncia de receita exige estimativa de impacto trienal e medidas de compensação ou não afetação das metas fiscais.",
+        "<strong>Despesa Obrigatória e Pessoal (LRF):</strong> DOCC (Art. 17 LRF — ato normativo com obrigação > 2 exercícios); limites de Despesa Total com Pessoal sobre a RCL (União 50%, Estados 60% — Executivo 49%, Legislativo/TCE 6%, Judiciário 6%, MP 2% —, Municípios 60%).",
+        "<strong>Dívida Pública, ARO, Regra de Ouro e Precatórios:</strong> Dívida fundada/consolidada (> 12 meses) vs. flutuante; Antecipação de Receita Orçamentária (ARO — vedada no último ano de mandato); Regra de Ouro (CF Art. 167, III); regime de precatórios (CF Art. 100).",
+        "<strong>Resultados Fiscais e NFSP:</strong> Critérios acima da linha (receitas menos despesas) vs. abaixo da linha (variação do endividamento líquido); Resultados Primário, Operacional e Nominal."
+      ]
     },
     {
-      name: "10. Fluência de Dados, IA e Segurança (LGPD)",
-      desc: "CRISP-DM, Data Lakehouse, SQL DQL, Qualidade, IA Generativa/LLMs, Governança, Ética na IA e LGPD",
-      content: `
-        <h2>Fluência de Dados, IA e Segurança da Informação</h2>
-        <h3>1. Ciência de Dados, CRISP-DM e Arquitetura</h3>
-        <ul>
-          <li><strong>Tipos de Dados:</strong> Estruturados (tabelas SQL), Semiestruturados (JSON, XML, YAML) e Não Estruturados (áudio, vídeo, texto livre, imagens).</li>
-          <li><strong>CRISP-DM (6 Fases):</strong> 1. Entendimento do Negócio &rarr; 2. Entendimento dos Dados &rarr; 3. Preparação dos Dados &rarr; 4. Modelagem &rarr; 5. Avaliação &rarr; 6. Implantação (<em>Deployment</em>) — processo cíclico/iterativo.</li>
-          <li><strong>Arquitetura:</strong> <em>Data Warehouse</em> (estruturado, Schema-on-Write), <em>Data Mart</em> (departamental), <em>Data Lake</em> (dados brutos em qualquer formato, Schema-on-Read) e <em>Data Lakehouse</em> (combina flexibilidade/baixo custo do Data Lake com transações ACID e governança do DW).</li>
-          <li><strong>Qualidade de Dados:</strong> Completude, Consistência, Acurácia, Validade e Unicidade.</li>
-        </ul>
-        <h3>2. Bancos de Dados, SQL (DQL) e IA Moderna</h3>
-        <ul>
-          <li><strong>SQL DQL:</strong> <code>SELECT</code>, <code>DISTINCT</code>, filtros (<code>WHERE</code>, <code>IN</code>, <code>BETWEEN</code>, <code>LIKE</code>), agregações (<code>COUNT</code>, <code>SUM</code>, <code>AVG</code>, <code>MIN</code>, <code>MAX</code>), <code>GROUP BY</code>, <code>HAVING</code>, junções (<code>INNER</code>, <code>LEFT</code>, <code>RIGHT</code>, <code>FULL JOIN</code>) e <code>ORDER BY</code>.</li>
-          <li><strong>NoSQL:</strong> Chave-Valor (Redis), Documentos (MongoDB), Colunar (Cassandra) e Grafos (Neo4j).</li>
-          <li><strong>IA, PLN e LLMs:</strong> Deep Learning (redes neurais profundas), PLN (Processamento de Linguagem Natural), IA Generativa e LLMs (Large Language Models baseados em arquitetura Transformer).</li>
-        </ul>
-        <h3>3. Governança de Dados e Ética na IA</h3>
-        <ul>
-          <li><strong>Modelos de Governança:</strong> Centralizada (único comitê/unidade dita regras), Compartilhada/Descentralizada (cada domínio gerencia seus dados) e Colegiada/Federada (padrões corporativos centrais com execução distribuída nos domínios).</li>
-          <li><strong>Ética na IA:</strong> Transparência, Responsabilidade (Accountability), Explicabilidade (XAI), Privacidade, Segurança, mitigação de <strong>Viés algorítmico</strong> e de <strong>Alucinação</strong> (respostas plausíveis, porém factualmente falsas em LLMs).</li>
-        </ul>
-        <h3>4. Segurança da Informação e LGPD (Lei 13.709/2018)</h3>
-        <ul>
-          <li><strong>Princípios (CIDR):</strong> Confidencialidade, Integridade, Disponibilidade e Rastreabilidade (além de Autenticidade e Não Repúdio).</li>
-          <li><strong>Técnicas de Proteção:</strong> <em>Anonimização</em> (irreversível — dado anonimizado não é considerado dado pessoal pela LGPD, salvo se reversível) vs. <em>Pseudonimização/Mascaramento</em> (reversível com informação adicional — continua sujeito à LGPD).</li>
-          <li><strong>LGPD no Poder Público:</strong> Agentes de tratamento (Controlador e Operador) + Encarregado (DPO). Bases legais para o Poder Público incluem cumprimento de obrigação legal/regulatória e execução de políticas públicas.</li>
-        </ul>
-        <div class="flash-box">
-          <strong>Foco FCC:</strong> Data Lakehouse une Data Lake + transações ACID do DW; dado <em>anonimizado</em> sai do escopo da LGPD, enquanto dado <em>pseudonimizado/mascarado</em> permanece sob a lei.
-        </div>
-      `
+      num: "10",
+      title: "Fluência de Dados",
+      ep: "Episódio 10",
+      topics: [
+        "<strong>Tipos de Dados e CRISP-DM:</strong> Estruturados, semiestruturados (JSON, XML) e não estruturados; ciclo CRISP-DM (Negócio → Dados → Preparação → Modelagem → Avaliação → Implantação).",
+        "<strong>Arquitetura Analítica e Qualidade:</strong> Data Warehouse (Star Schema vs. Snowflake), Data Mart, Data Lake (schema-on-read) e Data Lakehouse (transações ACID + flexibilidade); dimensões de qualidade (acurácia, completude, consistência, unicidade, atualidade e validade).",
+        "<strong>Bancos de Dados SQL e NoSQL:</strong> Ordem lógica do SQL DQL (FROM/JOIN → WHERE → GROUP BY → HAVING → SELECT → DISTINCT → ORDER BY → LIMIT); famílias NoSQL (Chave-Valor/Redis, Documentos/MongoDB, Colunar/Cassandra e Grafos/Neo4j).",
+        "<strong>IA Avançada, Governança e Segurança:</strong> Deep Learning, PLN, IA Generativa/LLMs (arquitetura Transformer, alucinações e vieses); Governança de Dados, Ética na IA, Segurança CID+A, Marco Civil da Internet (Lei 12.965/2014) e LGPD (Controlador, Operador, Encarregado/DPO e ANPD)."
+      ]
     }
   ];
 
   const episodes = [
-    { id: "dax", number: "01", title: "DAX Avançado (Complemento C03)", base: "audio/episodio-01-dax" },
-    { id: "scrum", number: "02", title: "Scrum na Prática de Prova", base: "audio/episodio-02-scrum" },
-    { id: "lrf", number: "03", title: "LRF e Limites Fiscais", base: "audio/episodio-03-lrf" },
-    { id: "matfin", number: "04", title: "Juros, Descontos e Amortização", base: "audio/episodio-04-matfin" },
-    { id: "python", number: "05", title: "Python e Pré-processamento", base: "audio/episodio-05-python" },
-    { id: "sql", number: "06", title: "SQL e Banco de Dados", base: "audio/episodio-06-sql" },
-    { id: "estatistica", number: "07", title: "Estatística e Probabilidade", base: "audio/episodio-07-estatistica" },
-    { id: "ml", number: "08", title: "Machine Learning e IA", base: "audio/episodio-08-ml" }
+    {
+      id: "ep01",
+      number: "01",
+      title: "Administração Geral, Pública e Auditoria",
+      subject: "Disciplina 01 • Edital 01/2026",
+      base: "audio/episodio-01-administracao"
+    },
+    {
+      id: "ep02",
+      number: "02",
+      title: "Direito Administrativo",
+      subject: "Disciplina 02 • Edital 01/2026",
+      base: "audio/episodio-02-direito-administrativo"
+    },
+    {
+      id: "ep03",
+      number: "03",
+      title: "Direito Constitucional e Reforma Tributária",
+      subject: "Disciplina 03 • Edital 01/2026",
+      base: "audio/episodio-03-direito-constitucional"
+    },
+    {
+      id: "ep04",
+      number: "04",
+      title: "Economia e Avaliação de Projetos",
+      subject: "Disciplina 04 • Edital 01/2026",
+      base: "audio/episodio-04-economia"
+    },
+    {
+      id: "ep05",
+      number: "05",
+      title: "Língua Portuguesa",
+      subject: "Disciplina 05 • Edital 01/2026",
+      base: "audio/episodio-05-portugues"
+    },
+    {
+      id: "ep06",
+      number: "06",
+      title: "Matemática Financeira e Estatística",
+      subject: "Disciplina 06 • Edital 01/2026",
+      base: "audio/episodio-06-matfin-estatistica"
+    },
+    {
+      id: "ep07",
+      number: "07",
+      title: "Administração Financeira e Orçamentária (AFO)",
+      subject: "Disciplina 07 • Edital 01/2026",
+      base: "audio/episodio-07-afo"
+    },
+    {
+      id: "ep08",
+      number: "08",
+      title: "Contabilidade Geral e Pública (CASP)",
+      subject: "Disciplina 08 • Edital 01/2026",
+      base: "audio/episodio-08-contabilidade"
+    },
+    {
+      id: "ep09",
+      number: "09",
+      title: "Direito Financeiro e Finanças Públicas",
+      subject: "Disciplina 09 • Edital 01/2026",
+      base: "audio/episodio-09-direito-financeiro"
+    },
+    {
+      id: "ep10",
+      number: "10",
+      title: "Fluência de Dados",
+      subject: "Disciplina 10 • Edital 01/2026",
+      base: "audio/episodio-10-fluencia-dados"
+    }
   ];
 
-  const questions = [
+  const quizData = [
     {
-      q: "1. (Auditoria — Modelo das Três Linhas IIA) No Modelo das Três Linhas, a responsabilidade primária pelo gerenciamento cotidiano dos riscos e pela execução dos controles internos pertence à:",
-      opts: ["Auditoria Interna (3ª Linha)", "Gestão Operacional (1ª Linha)", "Funções de Conformidade (2ª Linha)", "Controladoria Externa (TCE)"],
+      subject: "01. Adm. Geral, Pública e Auditoria",
+      q: "No framework Scrum, o compromisso associado diretamente ao artefato Incremento denomina-se:",
+      opts: ["Meta do Produto", "Definição de Pronto (Definition of Done)", "Meta da Sprint", "Critério de Aceitação do Backlog"],
       ans: 1,
-      exp: "A 1ª Linha (gestão operacional) é a 'dona' dos riscos e executa os controles no dia a dia; a 2ª apoia/monitora riscos e conformidade; a 3ª (Auditoria Interna) presta avaliação independente."
+      exp: "Cada artefato do Scrum possui um compromisso: Product Backlog → Meta do Produto; Sprint Backlog → Meta da Sprint; Incremento → Definição de Pronto."
     },
     {
-      q: "2. (Direito Administrativo — Lei 14.230/2021) De acordo com a atual redação da Lei de Improbidade Administrativa, a configuração de ato de improbidade administrativa exige:",
-      opts: ["Dolo ou culpa grave em qualquer modalidade", "Apenas culpa presumida nos casos de dano ao erário", "Dolo específico em todas as modalidades previstas na lei", "Responsabilidade objetiva do agente público"],
+      subject: "01. Adm. Geral, Pública e Auditoria",
+      q: "Segundo o MROSC (Lei nº 13.019/2014), a parceria proposta pela própria Organização da Sociedade Civil que envolve transferência de recursos financeiros formaliza-se por:",
+      opts: ["Termo de Colaboração", "Acordo de Cooperação", "Termo de Fomento", "Contrato de Gestão"],
       ans: 2,
-      exp: "A Lei nº 14.230/2021 aboliu a modalidade culposa da improbidade administrativa, passando a exigir dolo específico em todos os tipos."
+      exp: "Termo de Fomento é proposto pela OSC com repasse financeiro; Termo de Colaboração é proposto pela Administração; Acordo de Cooperação não envolve transferência financeira."
     },
     {
-      q: "3. (Direito Constitucional — Reforma Tributária EC 132/2023) Na Reforma Tributária instituída pela EC nº 132/2023, os tributos ICMS e ISS serão substituídos pelo:",
-      opts: ["CBS (Contribuição sobre Bens e Serviços)", "IBS (Imposto sobre Bens e Serviços)", "IS (Imposto Seletivo)", "IPI Unificado"],
+      subject: "02. Direito Administrativo",
+      q: "Nos termos da Lei nº 8.429/1992, com a redação dada pela Lei nº 14.230/2021, a configuração de ato de improbidade administrativa:",
+      opts: ["Admite modalidade culposa apenas quando houver dano ao erário.", "Exige a comprovação de dolo específico em todas as suas modalidades.", "Prescinde de dolo nos casos de enriquecimento ilícito.", "Aplica-se exclusivamente a servidores efetivos."],
       ans: 1,
-      exp: "O IBS (competência compartilhada entre Estados, DF e Municípios) substitui ICMS e ISS; já a CBS (federal) substitui PIS e Cofins."
+      exp: "A Lei 14.230/2021 extinguiu a improbidade culposa e passou a exigir dolo específico (vontade livre e consciente de alcançar o resultado ilícito) em todas as hipóteses."
     },
     {
-      q: "4. (Economia — Mundell-Fleming) Em uma economia aberta com perfeita mobilidade de capitais e regime de câmbio flutuante, a política econômica mais eficaz para expandir o produto é a:",
-      opts: ["Política fiscal expansionista", "Política monetária expansionista", "Política cambial de banda fixa", "Política de contingenciamento"],
-      ans: 1,
-      exp: "Com câmbio flutuante e alta mobilidade de capitais, a expansão monetária reduz juros, deprecia o câmbio e impulsiona as exportações líquidas."
-    },
-    {
-      q: "5. (Língua Portuguesa — Concordância) Assinale a alternativa em que a concordância verbal está rigorosamente de acordo com a norma-padrão:",
-      opts: ["Fazem dez anos que o concurso foi realizado.", "Houveram muitas dúvidas sobre o edital.", "Alugam-se salas comerciais no centro.", "Precisam-se de analistas experientes."],
+      subject: "02. Direito Administrativo",
+      q: "A extinção de um ato administrativo válido e eficaz por razões de conveniência e oportunidade da Administração Pública denomina-se:",
+      opts: ["Anulação, com efeitos ex tunc.", "Caducidade, com efeitos ex tunc.", "Revogação, com efeitos ex nunc.", "Cassação, declarada pelo Poder Judiciário."],
       ans: 2,
-      exp: "'Salas comerciais' é sujeito paciente da voz passiva sintética (VTD + SE), levando o verbo ao plural ('Alugam-se')."
+      exp: "Revogação incide sobre ato válido por motivo de mérito administrativo (conveniência e oportunidade), produzindo efeitos prospectivos (ex nunc)."
     },
     {
-      q: "6. (Estatística — Testes de Hipóteses) Em um teste de hipóteses estatístico, cometer o Erro Tipo I significa:",
-      opts: ["Não rejeitar H0 quando H0 é falsa", "Rejeitar H0 quando H0 é verdadeira", "Aceitar H1 quando p-valor > alfa", "Aumentar o poder do teste acima de 1"],
+      subject: "03. Direito Constitucional",
+      q: "De acordo com a Emenda Constitucional nº 132/2023 (Reforma Tributária), o Imposto sobre Bens e Serviços (IBS) será:",
+      opts: ["De competência exclusiva da União e cobrado na origem.", "De competência compartilhada entre Estados, DF e Municípios, cobrado no destino.", "Cumulativo nas operações interestaduais.", "Instituído por decreto do Poder Executivo estadual."],
       ans: 1,
-      exp: "O Erro Tipo I (probabilidade alfa) ocorre quando rejeitamos uma hipótese nula (H0) que na realidade era verdadeira (falso positivo)."
+      exp: "A EC 132/2023 criou o IVA Dual: CBS (União) e IBS (competência compartilhada entre Estados, DF e Municípios, não cumulativo pleno e regido pelo princípio do destino)."
     },
     {
-      q: "7. (AFO — Créditos Adicionais) Os créditos destinados a despesas imprevisíveis e urgentes, como as decorrentes de calamidade pública, denominam-se:",
-      opts: ["Créditos suplementares", "Créditos especiais", "Créditos extraordinários", "Restos a pagar não processados"],
+      subject: "03. Direito Constitucional",
+      q: "No âmbito do controle externo previsto nos arts. 70 a 75 da Constituição Federal, cabe ao Tribunal de Contas:",
+      opts: ["Julgar as contas anuais prestadas pelo Chefe do Poder Executivo.", "Apreciar as contas anuais do Chefe do Executivo mediante parecer prévio e julgar as contas dos demais administradores.", "Sustar diretamente contratos administrativos sem prévia comunicação ao Legislativo.", "Exercer controle exclusivamente prévio de legalidade."],
+      ans: 1,
+      exp: "O Tribunal de Contas emite parecer prévio sobre as contas anuais do Chefe do Executivo (julgadas pelo Legislativo) e julga as contas dos administradores e responsáveis por bens públicos."
+    },
+    {
+      subject: "04. Economia",
+      q: "Um bem público puro caracteriza-se simultaneamente por:",
+      opts: ["Rivalidade no consumo e possibilidade de exclusão.", "Não rivalidade no consumo e não exclusão.", "Alta elasticidade-preço da oferta e externalidade negativa.", "Exclusão pelo sistema de preços e rivalidade parcial."],
+      ans: 1,
+      exp: "Bens públicos puros são não rivais (o consumo por um indivíduo não reduz a disponibilidade para outro) e não excludentes (não é viável impedir o acesso de quem não paga)."
+    },
+    {
+      subject: "04. Economia",
+      q: "Na avaliação econômica de projetos de investimento, um projeto é considerado economicamente viável quando:",
+      opts: ["Seu VPL é negativo e sua TIR é inferior à TMA.", "Seu VPL é maior que zero e sua TIR supera a Taxa Mínima de Atratividade (TMA).", "Sua Duration é superior ao prazo do título.", "Seu VaR excede o patrimônio líquido."],
+      ans: 1,
+      exp: "VPL > 0 indica geração de valor acima do custo de oportunidade (TMA), o que equivale a uma TIR superior à TMA."
+    },
+    {
+      subject: "05. Língua Portuguesa",
+      q: "Assinale a alternativa em que o acento grave indicativo de crase está empregado corretamente:",
+      opts: ["O auditor referiu-se à todas as normas fiscais.", "A entrega do relatório ocorrerá à partir de segunda-feira.", "O contribuinte dirigiu-se à repartição fazendária para esclarecimentos.", "O parecer foi encaminhado à Vossa Excelência."],
       ans: 2,
-      exp: "Créditos extraordinários atendem despesas imprevisíveis e urgentes (guerra, comoção interna ou calamidade pública) e são abertos por MP ou Decreto."
+      exp: "'Dirigiu-se a + a repartição' exige crase. Não ocorre crase antes de pronome indefinido ('todas'), verbo ('partir') ou pronome de tratamento ('Vossa Excelência')."
     },
     {
-      q: "8. (Contabilidade Pública — PCASP) No Plano de Contas Aplicado ao Setor Público (PCASP), as classes que registram informações de natureza orçamentária são as classes:",
-      opts: ["1 e 2", "3 e 4", "5 e 6", "7 e 8"],
+      subject: "05. Língua Portuguesa",
+      q: "Transpondo para a voz passiva analítica a frase 'A equipe técnica analisou os balanços públicos', obtém-se:",
+      opts: ["Os balanços públicos foram analisados pela equipe técnica.", "Analisou-se os balanços públicos pela equipe técnica.", "Os balanços públicos eram analisados pela equipe técnica.", "A equipe técnica tinha analisado os balanços públicos."],
+      ans: 0,
+      exp: "O verbo 'analisou' está no pretérito perfeito do indicativo; na voz passiva analítica, o auxiliar 'ser' assume o mesmo tempo ('foram analisados')."
+    },
+    {
+      subject: "06. Matemática Financeira e Estatística",
+      q: "No Sistema de Amortização Constante (SAC), ao longo do prazo de um financiamento com juros compostos positivos:",
+      opts: ["As prestações são constantes e as amortizações crescem em progressão geométrica.", "As amortizações são constantes e as prestações decrescem em progressão aritmética.", "Os juros permanecem constantes e o saldo devedor cresce.", "As prestações crescem linearmente até a última parcela."],
+      ans: 1,
+      exp: "No SAC, a cota de amortização é constante; como os juros incidem sobre um saldo devedor que cai linearmente, os juros e as prestações decrescem em PA."
+    },
+    {
+      subject: "06. Matemática Financeira e Estatística",
+      q: "Em um teste de hipóteses estatístico, o Erro Tipo I consiste em:",
+      opts: ["Não rejeitar a hipótese nula (H0) quando ela é falsa.", "Rejeitar a hipótese nula (H0) quando ela é verdadeira.", "Aumentar o tamanho da amostra reduzindo a variância.", "Calcular o intervalo de confiança com nível 1 - beta."],
+      ans: 1,
+      exp: "Erro Tipo I (nível de significância alfa) ocorre quando rejeitamos H0 sendo H0 verdadeira. Erro Tipo II (beta) é não rejeitar H0 sendo H0 falsa."
+    },
+    {
+      subject: "07. Administração Financeira e Orçamentária",
+      q: "Os créditos adicionais destinados a despesas para as quais não haja dotação orçamentária específica são os créditos:",
+      opts: ["Suplementares, autorizados diretamente na própria LOA.", "Especiais, autorizados por lei específica e abertos por decreto.", "Extraordinários, dependentes de indicação prévia de superávit financeiro.", "Complementares, abertos exclusivamente no primeiro quadrimestre."],
+      ans: 1,
+      exp: "Créditos especiais criam nova dotação orçamentária, exigem autorização em lei específica (nunca na LOA) e abertura por decreto do Executivo."
+    },
+    {
+      subject: "07. Administração Financeira e Orçamentária",
+      q: "A sequência correta dos estágios da despesa orçamentária pública previstos na Lei nº 4.320/1964 é:",
+      opts: ["Previsão, Lançamento, Arrecadação e Recolhimento.", "Fixação, Empenho, Recolhimento e Liquidação.", "Empenho, Liquidação e Pagamento.", "Liquidação, Empenho e Pagamento."],
       ans: 2,
-      exp: "Classes 1 a 4 = natureza patrimonial; Classes 5 e 6 = natureza orçamentária; Classes 7 e 8 = natureza de controle."
+      exp: "Os estágios da execução da despesa são Empenho, Liquidação e Pagamento (ELP). Já PLAR refere-se aos estágios da receita."
     },
     {
-      q: "9. (Direito Financeiro — LRF) O limite máximo de despesa total com pessoal para o Poder Executivo Estadual em relação à Receita Corrente Líquida (RCL) é de:",
-      opts: ["50%", "60%", "49%", "6%"],
+      subject: "08. Contabilidade Geral e Pública (CASP)",
+      q: "No Plano de Contas Aplicado ao Setor Público (PCASP), as Variações Patrimoniais Diminutivas (VPD) e Aumentativas (VPA) pertencem, respectivamente, às classes:",
+      opts: ["Classes 1 e 2.", "Classes 3 e 4.", "Classes 5 e 6.", "Classes 7 e 8."],
+      ans: 1,
+      exp: "No PCASP: Classe 1 = Ativo; Classe 2 = Passivo/PL; Classe 3 = VPD; Classe 4 = VPA; Classes 5 e 6 = Orçamentária; Classes 7 e 8 = Controle."
+    },
+    {
+      subject: "08. Contabilidade Geral e Pública (CASP)",
+      q: "O reconhecimento da depreciação mensal de bens imóveis de uso especial no setor público gera:",
+      opts: ["Despesa orçamentária empenhada e variação patrimonial aumentativa.", "Apenas lançamento nas classes 5 e 6 do PCASP.", "Variação Patrimonial Diminutiva (VPD) sob o enfoque patrimonial, sem execução orçamentária.", "Fato contábil estritamente permutativo."],
       ans: 2,
-      exp: "O limite global dos Estados é 60% da RCL, repartido em 49% Executivo, 6% Judiciário, 3% Legislativo/TCE e 2% Ministério Público."
+      exp: "A depreciação reduz o ativo e reconhece uma VPD pelo regime de competência (enfoque patrimonial), sem representar desembolso ou execução orçamentária."
     },
     {
-      q: "10. (Fluência de Dados — LGPD) Segundo a Lei Geral de Proteção de Dados (Lei nº 13.709/2018), um dado submetido a processo irreversível que impede a identificação do titular é denominado dado:",
-      opts: ["Pseudonimizado", "Anonimizado", "Sensível", "Semiestruturado"],
+      subject: "09. Direito Financeiro e Finanças Públicas",
+      q: "De acordo com a Lei de Responsabilidade Fiscal (LC nº 101/2000), o limite máximo da despesa total com pessoal dos Estados, em relação à Receita Corrente Líquida (RCL), é de:",
+      opts: ["50%, sendo 40,9% para o Poder Executivo.", "60%, sendo 49% para o Poder Executivo.", "60%, sendo 54% para o Poder Executivo.", "50%, sendo 49% para o Poder Executivo."],
       ans: 1,
-      exp: "O dado anonimizado (quando o processo não puder ser revertido por meios razoáveis) não é considerado dado pessoal para fins da LGPD."
+      exp: "Nos Estados, o limite global de despesa com pessoal é de 60% da RCL, repartido em 49% Executivo, 6% Legislativo/TCE, 6% Judiciário e 2% Ministério Público."
     },
     {
-      q: "11. (Administração Pública — Indicadores 5 Es) O indicador que avalia o impacto final e a transformação social gerada por uma política pública na população denomina-se:",
-      opts: ["Eficiência", "Economicidade", "Efetividade", "Execução"],
+      subject: "09. Direito Financeiro e Finanças Públicas",
+      q: "A operação de crédito por antecipação de receita orçamentária (ARO) destinada a atender insuficiência de caixa durante o exercício financeiro:",
+      opts: ["Pode ser contratada livremente no último ano de mandato do Chefe do Executivo.", "É proibida no último ano de mandato do Presidente, Governador ou Prefeito.", "Integra a dívida pública fundada ou consolidada.", "Dispensa autorização legislativa e limites do Senado Federal."],
+      ans: 1,
+      exp: "Conforme o art. 38, IV, 'b' da LRF, a ARO é expressamente proibida no último ano de mandato do Chefe do Poder Executivo e integra a dívida flutuante."
+    },
+    {
+      subject: "10. Fluência de Dados",
+      q: "Na execução lógica de uma consulta SQL (DQL), a cláusula utilizada para filtrar grupos após a agregação realizada pelo GROUP BY é:",
+      opts: ["WHERE", "ORDER BY", "HAVING", "DISTINCT"],
       ans: 2,
-      exp: "Eficiência foca nos meios/custos; Eficácia no cumprimento de metas; Efetividade nos impactos e resultados reais na sociedade."
+      exp: "Ordem lógica do SQL: FROM/JOIN → WHERE (filtra linhas) → GROUP BY → HAVING (filtra grupos agregados) → SELECT → DISTINCT → ORDER BY → LIMIT."
     },
     {
-      q: "12. (Direito Administrativo — Lei 14.133/2021) Qual das modalidades abaixo NÃO existe mais na Nova Lei de Licitações e Contratos (Lei nº 14.133/2021)?",
-      opts: ["Diálogo Competitivo", "Pregão", "Tomada de Preços", "Concurso"],
-      ans: 2,
-      exp: "A Lei nº 14.133/2021 extinguiu Tomada de Preços e Convite, mantendo Pregão, Concorrência, Concurso, Leilão e criando o Diálogo Competitivo."
-    },
-    {
-      q: "13. (Direito Constitucional — Princípio da Exclusividade) Segundo o art. 165, § 8º da CF/88, a Lei Orçamentária Anual (LOA) poderá conter autorização para:",
-      opts: ["Abertura de créditos especiais e criação de cargos", "Abertura de créditos suplementares e contratação de operações de crédito, inclusive ARO", "Instituição de novos tributos estaduais", "Alteração do Plano Plurianual sem lei específica"],
+      subject: "10. Fluência de Dados",
+      q: "A arquitetura de dados que combina o armazenamento de baixo custo sobre dados brutos de um Data Lake com transações ACID e governança de um Data Warehouse denomina-se:",
+      opts: ["Data Mart Relacional", "Data Lakehouse", "Banco NoSQL Chave-Valor", "Modelo Snowflake Puro"],
       ans: 1,
-      exp: "Pelo princípio da exclusividade orçamentária, apenas créditos suplementares e operações de crédito (inclusive ARO) podem constar como exceções no texto da LOA."
-    },
-    {
-      q: "14. (Economia — Risco de Mercado) A medida estatística que estima a perda financeira máxima esperada de uma carteira em determinado horizonte de tempo e nível de confiança é o:",
-      opts: ["Duration", "Value at Risk (VaR)", "Índice de Sharpe", "Excesso de Gravame"],
-      ans: 1,
-      exp: "O VaR (Value at Risk) quantifica a pior perda esperada dentro de um intervalo de confiança (ex.: 95% ou 99%) e prazo definidos."
-    },
-    {
-      q: "15. (Língua Portuguesa — Conectivos) Na frase 'Conquanto o prazo fosse curto, os candidatos revisaram todo o edital', a conjunção destacada estabelece relação de:",
-      opts: ["Causa", "Conclusão", "Concessão", "Condição"],
-      ans: 2,
-      exp: "'Conquanto' é conjunção subordinativa concessiva (equivale a 'embora', 'ainda que')."
-    },
-    {
-      q: "16. (Matemática Financeira — Descontos) No regime de juros simples, a relação correta entre o Desconto Comercial (Dc) e o Desconto Racional (Dr) para uma mesma taxa i e prazo t é:",
-      opts: ["Dr = Dc × (1 + i × t)", "Dc = Dr × (1 + i × t)", "Dc = Dr / (1 + i × t)", "Dc = Dr × i × t"],
-      ans: 1,
-      exp: "Como o desconto comercial incide sobre o Valor Nominal N = A(1 + i·t), tem-se sempre Dc = Dr · (1 + i · t)."
-    },
-    {
-      q: "17. (AFO — Estágios da Despesa) O estágio da despesa orçamentária que consiste na verificação do direito adquirido pelo credor tendo por base os títulos e documentos comprobatórios é a:",
-      opts: ["Fixação", "Empenho", "Liquidação", "Recolhimento"],
-      ans: 2,
-      exp: "A liquidação (art. 63 da Lei 4.320/64) verifica a origem, o objeto, a importância exata a pagar e a quem se deve pagar."
-    },
-    {
-      q: "18. (Contabilidade Pública — Art. 35 Lei 4.320/64) Sob o enfoque orçamentário da Lei nº 4.320/1964, pertencem ao exercício financeiro:",
-      opts: ["As receitas lançadas e as despesas pagas", "As receitas arrecadadas e as despesas legalmente empenhadas", "As receitas previstas e as despesas liquidadas", "As receitas arrecadadas e as despesas pagas"],
-      ans: 1,
-      exp: "O art. 35 adota o regime misto sob a ótica orçamentária: caixa para receitas (arrecadadas) e competência orçamentária para despesas (legalmente empenhadas)."
-    },
-    {
-      q: "19. (Direito Financeiro — Resultados Fiscais) O resultado fiscal que confronta receitas e despesas não financeiras do setor público, excluindo o pagamento de juros da dívida, é o:",
-      opts: ["Resultado Nominal", "Resultado Primário", "Resultado Operacional", "Superávit Patrimonial"],
-      ans: 1,
-      exp: "O Resultado Primário desconsidera receitas e despesas com juros, medindo o esforço fiscal efetivo do governo."
-    },
-    {
-      q: "20. (Fluência de Dados — Arquitetura) A arquitetura de dados que combina o armazenamento de baixo custo e dados brutos de um Data Lake com suporte a transações ACID e governança de um Data Warehouse é o:",
-      opts: ["Data Mart", "Data Lakehouse", "OLTP Relacional", "Schema-on-Write"],
-      ans: 1,
-      exp: "O Data Lakehouse integra a escalabilidade de dados não estruturados/semiestruturados do Data Lake com recursos ACID e esquemas gerenciados do Data Warehouse."
+      exp: "O Data Lakehouse une a escalabilidade e suporte a múltiplos formatos do Data Lake com a confiabilidade transacional (ACID) e desempenho analítico do Data Warehouse."
     }
   ];
 
   const $ = id => document.getElementById(id);
+  const resolvedAudioUrls = {};
+  let quizAnswers = {};
 
-  function switchView(viewId, badgeLabel) {
-    document.querySelectorAll(".view-section").forEach(el => el.classList.remove("active"));
-    $("view-" + viewId).classList.add("active");
-    $("navBadge").textContent = badgeLabel;
+  function switchView(viewName, label) {
+    document.querySelectorAll(".view-section").forEach(sec => sec.classList.remove("active"));
+    const target = $("view-" + viewName);
+    if (target) target.classList.add("active");
+    $("headerBadge").textContent = label;
     window.scrollTo({ top: 0, behavior: "smooth" });
   }
 
-  function openLesson(index) {
-    const sub = subjects[index];
-    $("lessonReaderContent").innerHTML = sub.content;
-    switchView("leitor", "Leitura");
+  function getCompletedSubjects() {
+    try {
+      return JSON.parse(localStorage.getItem("c03_edital_subjects") || "[]");
+    } catch {
+      return [];
+    }
   }
 
-  function playFeatured() {
-    const ep = episodes[0];
-    $("miniTitle").textContent = `Episódio ${ep.number} — ${ep.title}`;
-    $("miniPlayer").classList.add("visible");
-    const player = $("globalAudio");
-    player.innerHTML = `
-      <source src="${ep.base}.m4a" type="audio/mp4">
-      <source src="${ep.base}.mp3" type="audio/mpeg">
-    `;
-    player.load();
-    player.play().catch(() => {
-      switchView("podcasts", "Podcasts");
-    });
+  function toggleSubjectDone(index) {
+    const done = getCompletedSubjects();
+    const next = done.includes(index)
+      ? done.filter(i => i !== index)
+      : [...done, index];
+    localStorage.setItem("c03_edital_subjects", JSON.stringify(next));
+    renderSubjects();
+    updateProgress();
+  }
+
+  function renderSubjects() {
+    const query = ($("searchInput")?.value || "").trim().toLowerCase();
+    const done = getCompletedSubjects();
+
+    const filtered = subjectsData
+      .map((item, idx) => ({ ...item, idx }))
+      .filter(item => {
+        if (!query) return true;
+        const blob = (item.title + " " + item.topics.join(" ")).toLowerCase();
+        return blob.includes(query);
+      });
+
+    if (!filtered.length) {
+      $("subjectsList").innerHTML = `<div class="item-card"><p style="margin:0;color:var(--muted);">Nenhum tópico encontrado para "${query}".</p></div>`;
+      return;
+    }
+
+    $("subjectsList").innerHTML = filtered.map(item => {
+      const isDone = done.includes(item.idx);
+      return `
+        <article class="item-card">
+          <div class="item-card-header">
+            <div>
+              <span class="tag-num">DISCIPLINA ${item.num} • ${item.ep.toUpperCase()}</span>
+              <h3>${item.title}</h3>
+            </div>
+          </div>
+          <ul class="topic-list">
+            ${item.topics.map(t => `<li>${t}</li>`).join("")}
+          </ul>
+          <button class="btn ${isDone ? "btn-done" : ""}" onclick="toggleSubjectDone(${item.idx})">
+            ${isDone ? "✓ Disciplina concluída" : "Marcar como concluída"}
+          </button>
+        </article>
+      `;
+    }).join("");
+  }
+
+  function updateProgress() {
+    const done = getCompletedSubjects();
+    const total = subjectsData.length;
+    const pct = Math.round((done.length / total) * 100);
+
+    $("progressBar").style.width = pct + "%";
+    $("progressText").textContent = `${pct}% concluído (${done.length}/${total} disciplinas)`;
+
+    $("progressChecklist").innerHTML = subjectsData.map((item, idx) => {
+      const isDone = done.includes(idx);
+      return `
+        <div class="checklist-row">
+          <span><strong>${item.num}.</strong> ${item.title}</span>
+          <button class="btn ${isDone ? "btn-done" : ""}" style="padding:6px 11px;font-size:11.5px;flex-shrink:0;" onclick="toggleSubjectDone(${idx})">
+            ${isDone ? "✓ Feito" : "Concluir"}
+          </button>
+        </div>
+      `;
+    }).join("");
   }
 
   function formatDuration(sec) {
@@ -1168,175 +1108,207 @@
     return ` · ${m}:${s} min`;
   }
 
-  function renderSubjects() {
-    const query = ($("subjectSearch")?.value || "").toLowerCase().trim();
-    const done = JSON.parse(localStorage.getItem("c03_edital_subjects") || "[]");
+  async function resolveAudioUrl(ep) {
+    if (resolvedAudioUrls[ep.id]) return resolvedAudioUrls[ep.id];
 
-    const filtered = subjects
-      .map((sub, i) => ({ sub, i }))
-      .filter(({ sub }) =>
-        !query ||
-        sub.name.toLowerCase().includes(query) ||
-        sub.desc.toLowerCase().includes(query) ||
-        sub.content.toLowerCase().includes(query)
-      );
+    const candidates = [`${ep.base}.m4a`, `${ep.base}.mp3`];
+    if ("caches" in window) {
+      const cache = await caches.open("c03-audios-v1");
+      for (const url of candidates) {
+        const cached = await cache.match(new Request(new URL(url, location.href)));
+        if (cached) {
+          resolvedAudioUrls[ep.id] = url;
+          return url;
+        }
+      }
+    }
 
-    $("subjectsList").innerHTML = filtered.map(({ sub, i }) => {
-      const isDone = done.includes(i);
-      return `
-        <div class="item-card subject-row">
-          <div style="cursor:pointer; flex:1;" onclick="openLesson(${i})">
-            <strong>${sub.name}</strong>
-            <small>${sub.desc}</small>
-          </div>
-          <div class="subject-actions">
-            <button class="btn-action btn-primary" onclick="openLesson(${i})">Ler</button>
-            <button class="btn-action ${isDone ? "done" : ""}" onclick="toggleSubject(${i})">
-              ${isDone ? "✓" : "Concluir"}
-            </button>
-          </div>
-        </div>
-      `;
-    }).join("") || `<p style="font-size:13px; color:var(--muted);">Nenhum tópico encontrado para "${query}".</p>`;
+    for (const url of candidates) {
+      try {
+        const res = await fetch(url, { method: "HEAD" });
+        if (res.ok) {
+          resolvedAudioUrls[ep.id] = url;
+          return url;
+        }
+      } catch {}
+    }
 
-    updateProgress();
+    resolvedAudioUrls[ep.id] = candidates[0];
+    return candidates[0];
   }
 
-  function toggleSubject(i) {
-    const done = JSON.parse(localStorage.getItem("c03_edital_subjects") || "[]");
-    const next = done.includes(i) ? done.filter(x => x !== i) : [...done, i];
-    localStorage.setItem("c03_edital_subjects", JSON.stringify(next));
-    renderSubjects();
+  function setMediaSession(ep) {
+    if ("mediaSession" in navigator) {
+      navigator.mediaSession.metadata = new MediaMetadata({
+        title: `Episódio ${ep.number} — ${ep.title}`,
+        artist: "Lucas e Mariana · SEFAZ-SP C03",
+        album: "Rumo ao Top 5 — APOFP (Edital 01/2026)"
+      });
+    }
   }
 
-  function updateProgress() {
-    const done = JSON.parse(localStorage.getItem("c03_edital_subjects") || "[]");
-    const pct = Math.round((done.length / subjects.length) * 100);
-    $("progressBar").style.width = pct + "%";
-    $("progressText").textContent = `${pct}% concluído • ${done.length} de ${subjects.length} disciplinas do edital`;
+  async function toggleFeatured() {
+    const ep = episodes[0];
+    const audio = $("featuredAudio");
+    const icon = $("featuredMainIcon");
+
+    if (!audio.src) {
+      const url = await resolveAudioUrl(ep);
+      audio.src = url;
+      audio.onloadedmetadata = () => {
+        $("featuredMeta").textContent = "Lucas e Mariana" + formatDuration(audio.duration);
+      };
+    }
+
+    if (audio.paused) {
+      setMediaSession(ep);
+      audio.play().then(() => {
+        icon.innerHTML = `<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>`;
+      }).catch(() => {
+        switchView("podcasts", "Podcasts");
+      });
+    } else {
+      audio.pause();
+      icon.innerHTML = `<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="6 3 20 12 6 21 6 3"/></svg>`;
+    }
   }
 
   async function renderEpisodes() {
     $("episodesList").innerHTML = episodes.map(ep => `
-      <div class="item-card">
-        <div class="ep-header">
-          <div>
-            <h3>Episódio ${ep.number} — ${ep.title}</h3>
-            <p id="meta-${ep.id}">Lucas e Mariana</p>
-          </div>
-        </div>
-        <audio controls preload="metadata" playsinline id="audio-${ep.id}">
-          <source src="${ep.base}.m4a" type="audio/mp4">
-          <source src="${ep.base}.mp3" type="audio/mpeg">
-        </audio>
+      <article class="item-card">
+        <span class="tag-num">EPISÓDIO ${ep.number}</span>
+        <h3>${ep.title}</h3>
+        <p class="ep-meta" id="meta-${ep.id}">Lucas e Mariana · ${ep.subject}</p>
+        <audio id="audio-${ep.id}" controls preload="metadata"></audio>
         <div class="ep-actions">
-          <button class="btn-action btn-primary" onclick="downloadEpisode('${ep.id}')">⬇ Baixar offline</button>
-          <button class="btn-action" onclick="removeEpisode('${ep.id}')">Remover</button>
+          <button class="btn btn-green" onclick="downloadEpisode('${ep.id}')">⬇ Baixar offline</button>
+          <button class="btn" onclick="removeEpisode('${ep.id}')">Remover cache</button>
         </div>
-        <div class="ep-status" id="status-${ep.id}">Pronto para reproduzir</div>
-      </div>
+        <div class="ep-status" id="status-${ep.id}">Verificando disponibilidade...</div>
+      </article>
     `).join("");
 
-    episodes.forEach(ep => {
+    const cache = ("caches" in window) ? await caches.open("c03-audios-v1") : null;
+
+    for (const ep of episodes) {
       const audioEl = $("audio-" + ep.id);
-      if (audioEl) {
-        audioEl.addEventListener("loadedmetadata", () => {
-          $("meta-" + ep.id).textContent = "Lucas e Mariana" + formatDuration(audioEl.duration);
-        });
-      }
-    });
+      const statusEl = $("status-" + ep.id);
+      const metaEl = $("meta-" + ep.id);
 
-    if ("caches" in window) {
-      const cache = await caches.open("c03-audios-v1");
-      for (const ep of episodes) {
-        const m4aMatch = await cache.match(new Request(new URL(ep.base + ".m4a", location.href)));
-        const mp3Match = await cache.match(new Request(new URL(ep.base + ".mp3", location.href)));
-        if (m4aMatch || mp3Match) {
-          $("status-" + ep.id).textContent = "✓ Salvo offline no dispositivo";
+      const url = await resolveAudioUrl(ep);
+      audioEl.src = url;
+
+      audioEl.onerror = () => {
+        if (audioEl.src.endsWith(".m4a")) {
+          audioEl.src = `${ep.base}.mp3`;
         }
+      };
+
+      audioEl.onloadedmetadata = () => {
+        metaEl.textContent = `Lucas e Mariana${formatDuration(audioEl.duration)} · ${ep.subject}`;
+      };
+
+      audioEl.onplay = () => {
+        document.querySelectorAll("audio").forEach(a => {
+          if (a !== audioEl && !a.paused) a.pause();
+        });
+        setMediaSession(ep);
+      };
+
+      if (cache) {
+        const m4aMatch = await cache.match(new Request(new URL(`${ep.base}.m4a`, location.href)));
+        const mp3Match = await cache.match(new Request(new URL(`${ep.base}.mp3`, location.href)));
+        if (m4aMatch || mp3Match) {
+          statusEl.textContent = "✓ Episódio disponível offline.";
+        } else {
+          statusEl.textContent = "Streaming disponível quando conectado.";
+        }
+      } else {
+        statusEl.textContent = "Streaming disponível quando conectado.";
       }
     }
-  }
-
-  async function resolveAudioUrl(base) {
-    for (const ext of [".m4a", ".mp3"]) {
-      try {
-        const res = await fetch(base + ext, { method: "HEAD" });
-        if (res.ok) return base + ext;
-      } catch {}
-    }
-    return null;
   }
 
   async function downloadEpisode(id) {
     const ep = episodes.find(x => x.id === id);
     const status = $("status-" + id);
-    status.classList.remove("error");
-    status.textContent = "Localizando arquivo de áudio...";
+    status.textContent = "Baixando episódio para uso offline...";
 
-    const validUrl = await resolveAudioUrl(ep.base);
-    if (!validUrl) {
-      status.classList.add("error");
-      status.textContent = "Arquivo não encontrado na pasta audio/ (.m4a ou .mp3).";
-      return;
+    const candidates = [`${ep.base}.m4a`, `${ep.base}.mp3`];
+    for (const url of candidates) {
+      try {
+        const res = await fetch(url);
+        if (res.ok) {
+          const cache = await caches.open("c03-audios-v1");
+          await cache.put(new Request(new URL(url, location.href)), res.clone());
+          resolvedAudioUrls[ep.id] = url;
+          $("audio-" + id).src = url;
+          status.textContent = "✓ Episódio disponível offline.";
+          return;
+        }
+      } catch {}
     }
 
-    status.textContent = "Baixando episódio para offline...";
-    try {
-      const res = await fetch(validUrl);
-      if (!res.ok) throw new Error();
-      const cache = await caches.open("c03-audios-v1");
-      await cache.put(new Request(new URL(validUrl, location.href)), res.clone());
-      status.textContent = "✓ Salvo offline no dispositivo";
-    } catch {
-      status.classList.add("error");
-      status.textContent = "Falha ao salvar no cache do iOS.";
-    }
+    status.textContent = "Arquivo não encontrado na pasta audio/. Verifique o nome e extensão (.m4a ou .mp3).";
   }
 
   async function removeEpisode(id) {
     const ep = episodes.find(x => x.id === id);
-    const cache = await caches.open("c03-audios-v1");
-    await cache.delete(new Request(new URL(ep.base + ".m4a", location.href)));
-    await cache.delete(new Request(new URL(ep.base + ".mp3", location.href)));
-    const status = $("status-" + id);
-    status.classList.remove("error");
-    status.textContent = "Download removido";
+    if ("caches" in window) {
+      const cache = await caches.open("c03-audios-v1");
+      await cache.delete(new Request(new URL(`${ep.base}.m4a`, location.href)));
+      await cache.delete(new Request(new URL(`${ep.base}.mp3`, location.href)));
+    }
+    $("status-" + id).textContent = "Download removido do dispositivo.";
   }
 
   function renderQuiz() {
-    $("quizContainer").innerHTML = questions.map((item, qIdx) => `
-      <div class="item-card">
-        <strong style="font-size:14px;">${item.q}</strong>
-        ${item.opts.map((opt, oIdx) => `
-          <button class="quiz-option" id="q-${qIdx}-${oIdx}" onclick="checkAnswer(${qIdx}, ${oIdx})">${opt}</button>
-        `).join("")}
-        <div class="quiz-exp" id="exp-${qIdx}"><strong>Comentário:</strong> ${item.exp}</div>
-      </div>
-    `).join("");
+    $("quizContainer").innerHTML = quizData.map((item, qIdx) => {
+      const chosen = quizAnswers[qIdx];
+      return `
+        <article class="item-card">
+          <span class="tag-num">QUESTÃO ${String(qIdx + 1).padStart(2, "0")} • ${item.subject}</span>
+          <p class="quiz-q">${item.q}</p>
+          ${item.opts.map((opt, oIdx) => {
+            let cls = "quiz-opt";
+            if (chosen !== undefined) {
+              if (oIdx === item.ans) cls += " correct";
+              else if (oIdx === chosen) cls += " wrong";
+            }
+            return `<button class="${cls}" onclick="answerQuiz(${qIdx}, ${oIdx})">${String.fromCharCode(65 + oIdx)}) ${opt}</button>`;
+          }).join("")}
+          <div class="quiz-exp" style="display:${chosen !== undefined ? "block" : "none"};">
+            <strong>Gabarito comentado:</strong> ${item.exp}
+          </div>
+        </article>
+      `;
+    }).join("");
+
+    const hits = Object.entries(quizAnswers).filter(([qIdx, opt]) => quizData[qIdx].ans === opt).length;
+    $("quizScoreBadge").textContent = `${hits} / ${quizData.length} acertos`;
   }
 
-  function checkAnswer(qIdx, oIdx) {
-    const correct = questions[qIdx].ans;
-    questions[qIdx].opts.forEach((_, idx) => {
-      const btn = $(`q-${qIdx}-${idx}`);
-      btn.disabled = true;
-      if (idx === correct) btn.classList.add("correct");
-      else if (idx === oIdx) btn.classList.add("wrong");
-    });
-    $("exp-" + qIdx).style.display = "block";
+  function answerQuiz(qIdx, oIdx) {
+    quizAnswers[qIdx] = oIdx;
+    renderQuiz();
+  }
+
+  function resetQuiz() {
+    quizAnswers = {};
+    renderQuiz();
+    window.scrollTo({ top: 0, behavior: "smooth" });
   }
 
   if ("serviceWorker" in navigator) {
     window.addEventListener("load", () => {
-      navigator.serviceWorker.register("./sw.js").catch(() => {});
+      navigator.serviceWorker.register("./sw.js").catch(console.error);
     });
   }
 
   renderSubjects();
   renderEpisodes();
   renderQuiz();
+  updateProgress();
 </script>
-
 </body>
 </html>
